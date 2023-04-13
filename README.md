@@ -1,5 +1,10 @@
-# setharophone
-A home for all the algorithms in "Tuning, Timbre, Spectrum, Scale" implemented in R
+setharophone - Musical Scale and Spectrum Calculations
+================
 
-## The plan
-The plan is to work through the book and implement everything in R. 
+## Overview
+
+`setharophone` implements algorithms for composing music, based on
+William Sethares’ *Tuning, Timbre, Spectrum, Scale*
+\[@sethares2013tuning\].
+
+## References
