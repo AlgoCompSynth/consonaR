@@ -1,0 +1,26 @@
+---
+title: "About Scale Tables"
+output: rmarkdown::html_vignette
+bibliography: "setharophone.bibtex"
+vignette: >
+  %\VignetteIndexEntry{About Scale Tables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(setharophone)
+```
+
+@sethares1998tuning
+
+@sethares2013tuning
+
+## References
