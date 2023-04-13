@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(setharophone)
+#library(setharophone)
 ```
 
 @sethares1998tuning
