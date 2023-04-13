@@ -1,7 +1,7 @@
 ---
-title: "setharophone - Musical Scale and Spectrum Calculations"
-output: github_document
+title: "setharophone - Composing with Musical Scales and Spectra"
 biblography: "setharophone.bibtex"
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -11,6 +11,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Overview
 
 `setharophone` implements algorithms for composing music, based on William
-Sethares' _Tuning, Timbre, Spectrum, Scale_ [@sethares2013tuning].
+Sethares' _Tuning, Timbre, Spectrum, Scale_ [@sethares1998tuning].
 
 ## References
