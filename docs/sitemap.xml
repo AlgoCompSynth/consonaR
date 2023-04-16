@@ -16,12 +16,24 @@
     <loc>https://algocompsynth.github.io/setharophone/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
+    <loc>https://algocompsynth.github.io/setharophone/CONTRIBUTING.html</loc>
+  </url>
+  <url>
     <loc>https://algocompsynth.github.io/setharophone/index.html</loc>
   </url>
   <url>
     <loc>https://algocompsynth.github.io/setharophone/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://algocompsynth.github.io/setharophone/reference/cents2ratio.html</loc>
+  </url>
+  <url>
     <loc>https://algocompsynth.github.io/setharophone/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://algocompsynth.github.io/setharophone/reference/period_reduce.html</loc>
+  </url>
+  <url>
+    <loc>https://algocompsynth.github.io/setharophone/reference/ratio2cents.html</loc>
   </url>
 </urlset>

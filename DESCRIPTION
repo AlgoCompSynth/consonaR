@@ -7,6 +7,9 @@ Authors@R:
 Description: `setharophone` implements algorithms for composing music, based on
              William Sethares' +Tuning, Timbre, Spectrum, Scale_.
 License: GPL (>= 3)
+URL: https://algocompsynth.github.io/setharophone/,
+    https://github.com/AlgoCompSynth/setharophone
+BugReports: https://github.com/AlgoCompSynth/setharophone/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3

@@ -1,3 +1,4 @@
 url: "https://algocompsynth.github.io/setharophone/"
 template:
   bootstrap: 5
+  bootswatch: darkly
