@@ -58,3 +58,46 @@ period_reduce <- function(scale, period = 2.0) {
 
   return(w)
 }
+
+#' @title Dissonance
+#' @name dissonance
+#' @description Calculates the dissonance function for two sine waves
+#' @importFrom Rdpack reprompt
+#' @export dissonance
+#' @param freq1 frequency in Hertz of the first sine wave
+#' @param freq2 frequency in Hertz of the second sine wave
+#' @param loud1 loudness of the first sine wave
+#' @param loud2 loudness of the second sine wave
+#' @returns the dissonance value
+#' @details This algorithm comes from Appendix E of
+#' \insertCite{sethares2013tuning}{setharophone}
+#' @references
+#' \insertAllCited{}
+
+dissonance <- function(freq1, freq2, loud1, loud2) {
+  if (freq1 < freq2) {
+    f1 <- freq1
+    f2 <- freq2
+    l1 <- loud1
+    l2 <- loud2
+  } else {
+    f2 <- freq1
+    f1 <- freq2
+    l2 <- loud1
+    l1 <- loud2
+  }
+  l12 <- min(l1, l2)
+
+  # constants
+  B1 <- -3.5
+  B2 <- -5.75
+  X_STAR <- 0.24
+  S1 <- 0.021
+  S2 <- 19
+
+  # scale factor
+  s <- (X_STAR * (f2 - f1)) / (S1 * f1 + S2)
+
+  dissonance <- l12 * (exp(B1 * s) - exp(B2 * s))
+  return(dissonance)
+}
