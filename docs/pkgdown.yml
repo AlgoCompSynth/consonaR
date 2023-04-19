@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   about-scale-tables: about-scale-tables.html
-last_built: 2023-04-16T20:48Z
+last_built: 2023-04-19T00:15Z
 urls:
   reference: https://algocompsynth.github.io/setharophone/reference
   article: https://algocompsynth.github.io/setharophone/articles

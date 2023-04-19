@@ -1,7 +1,7 @@
 ---
 title: "setharophone - Composing with Musical Scales and Spectra"
 output: github_document
-bibliography: "vignettes/setharophone.bibtex"
+bibliography: "inst/REFERENCES.bib"
 ---
 
 ```{r setup, include=FALSE}
