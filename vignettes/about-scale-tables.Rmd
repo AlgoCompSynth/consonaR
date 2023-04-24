@@ -1,7 +1,7 @@
 ---
 title: "About Scale Tables"
 output: rmarkdown::html_vignette
-bibliography: "../inst/REFERENCES.bib"
+bibliography: "REFERENCES.bib"
 vignette: >
   %\VignetteIndexEntry{About Scale Tables}
   %\VignetteEngine{knitr::rmarkdown}
