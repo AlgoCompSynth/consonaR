@@ -27,7 +27,7 @@ parse_scale <- function(v) {
   ))
 }
 lcmd <- function(v) {
-  numbers::mLCM(fractional::denominators(v))
+  fractional::numerical(numbers::mLCM(fractional::denominators(v)) * v)
 }
 
 carlos_harm <-
@@ -35,21 +35,21 @@ carlos_harm <-
   grep(pattern = "/", value = TRUE) |>
   parse_scale()
 (carlos_harm)
-(lcmd(carlos_harm) * carlos_harm)
+(lcmd(carlos_harm))
 
 carlos_super <-
   readLines("d:/znmeb/Downloads/Scala scales/scl/carlos_super.scl") |>
   grep(pattern = "/", value = TRUE) |>
   parse_scale()
 (carlos_super)
-(lcmd(carlos_super) * carlos_super)
+(lcmd(carlos_super))
 
 bohlen_pierce <-
   readLines("d:/znmeb/Downloads/Scala scales/scl/bohlen-p.scl") |>
   grep(pattern = "/", value = TRUE) |>
   parse_scale()
 (bohlen_pierce)
-(lcmd(bohlen_pierce) * bohlen_pierce)
+(lcmd(bohlen_pierce))
 
 ```
 
