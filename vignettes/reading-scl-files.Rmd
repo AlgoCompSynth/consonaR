@@ -44,5 +44,12 @@ carlos_super <-
 (carlos_super)
 (lcmd(carlos_super) * carlos_super)
 
+bohlen_pierce <-
+  readLines("d:/znmeb/Downloads/Scala scales/scl/bohlen-p.scl") |>
+  grep(pattern = "/", value = TRUE) |>
+  parse_scale()
+(bohlen_pierce)
+(lcmd(bohlen_pierce) * bohlen_pierce)
+
 ```
 
