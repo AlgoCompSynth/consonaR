@@ -14,7 +14,7 @@ et_scale_table(period = 2, divisions = 12, root = 440/(2^0.75))
 \item{root}{Frequency of the scale root - default is middle C = 261.6256}
 }
 \value{
-a \code{data.table} with six columns:
+a \code{data.table} with seven columns:
 \itemize{
 \item \code{ratio}: the ratio that defines the note, as a number between 1 and
 \code{period}
@@ -23,6 +23,12 @@ for this type of scale are usually irrational, so this is an approximation,
 computed by \code{fractional::fractional}.
 \item \code{ratio_cents}: the ratio in cents (hundredths of a semitone)
 \item \code{frequency}: frequency of the note given the \code{root} parameter
+\item \code{bent_midi}: the MIDI note number as an integer plus a fraction. For
+example, middle C is MIDI note number 60 and middle C sharp is 61. The
+quarter-tone half-way between C and C sharp would have a \code{bent_midi} value
+of 60.5. The name \code{bent_midi} comes from the fact that a MIDI sequencer
+can convert the value to a regular integer MIDI note number message and
+a pitch bend message.
 \item \code{interval_cents}: interval between this note and the previous note
 \item \code{degree}: scale degree from zero to (number of notes) - 1
 }

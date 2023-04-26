@@ -27,6 +27,7 @@ period."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mat
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/about-scale-tables.html">About Scale Tables</a>
+    <a class="dropdown-item" href="../articles/reading-scl-files.html">Reading Scala .scl Files</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -78,13 +79,19 @@ period.</p>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>a <code>data.table</code> with six columns:</p><ul><li><p><code>ratio</code>: the ratio that defines the note, as a number between 1 and
+<p>a <code>data.table</code> with seven columns:</p><ul><li><p><code>ratio</code>: the ratio that defines the note, as a number between 1 and
 <code>period</code></p></li>
 <li><p><code>ratio_frac</code>: the ratio as a vulgar fraction (character). The ratios
 for this type of scale are usually irrational, so this is an approximation,
 computed by <code><a href="https://rdrr.io/pkg/fractional/man/fractional.html" class="external-link">fractional::fractional</a></code>.</p></li>
 <li><p><code>ratio_cents</code>: the ratio in cents (hundredths of a semitone)</p></li>
 <li><p><code>frequency</code>: frequency of the note given the <code>root</code> parameter</p></li>
+<li><p><code>bent_midi</code>: the MIDI note number as an integer plus a fraction. For
+example, middle C is MIDI note number 60 and middle C sharp is 61. The
+quarter-tone half-way between C and C sharp would have a <code>bent_midi</code> value
+of 60.5. The name <code>bent_midi</code> comes from the fact that a MIDI sequencer
+can convert the value to a regular integer MIDI note number message and
+a pitch bend message.</p></li>
 <li><p><code>interval_cents</code>: interval between this note and the previous note</p></li>
 <li><p><code>degree</code>: scale degree from zero to (number of notes) - 1</p></li>
 </ul></div>
@@ -93,113 +100,113 @@ computed by <code><a href="https://rdrr.io/pkg/fractional/man/fractional.html" c
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">vanilla</span> <span class="op">&lt;-</span> <span class="fu">et_scale_table</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># default is 12EDO, of course</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        ratio ratio_frac ratio_cents frequency interval_cents degree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 1.000000          1           0  261.6256             NA      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1.059463  1461/1379         100  277.1826            100      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1.122462  1714/1527         200  293.6648            100      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 1.189207  1785/1501         300  311.1270            100      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 1.259921    635/504         400  329.6276            100      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 1.334840  3249/2434         500  349.2282            100      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 1.414214   1393/985         600  369.9944            100      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 1.498307  2213/1477         700  391.9954            100      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 1.587401   1008/635         800  415.3047            100      8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 1.681793  3002/1785         900  440.0000            100      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 1.781797   1527/857        1000  466.1638            100     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 1.887749  2943/1559        1100  493.8833            100     11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 2.000000          2        1200  523.2511            100      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        ratio ratio_frac ratio_cents frequency bent_midi interval_cents degree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 1.000000          1           0  261.6256        60             NA      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1.059463  1461/1379         100  277.1826        61            100      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1.122462  1714/1527         200  293.6648        62            100      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 1.189207  1785/1501         300  311.1270        63            100      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 1.259921    635/504         400  329.6276        64            100      4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 1.334840  3249/2434         500  349.2282        65            100      5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 1.414214   1393/985         600  369.9944        66            100      6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 1.498307  2213/1477         700  391.9954        67            100      7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 1.587401   1008/635         800  415.3047        68            100      8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 1.681793  3002/1785         900  440.0000        69            100      9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 1.781797   1527/857        1000  466.1638        70            100     10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 1.887749  2943/1559        1100  493.8833        71            100     11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 2.000000          2        1200  523.2511        72            100      0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 19-EDO</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">edo19</span> <span class="op">&lt;-</span> <span class="fu">et_scale_table</span><span class="op">(</span><span class="fl">2.0</span>, <span class="fl">19</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        ratio ratio_frac ratio_cents frequency interval_cents degree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 1.000000          1     0.00000  261.6256             NA      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1.037155    977/942    63.15789  271.3463       63.15789      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1.075691    739/687   126.31579  281.4282       63.15789      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 1.115658    627/562   189.47368  291.8846       63.15789      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 1.157110   1009/872   252.63158  302.7296       63.15789      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 1.200103  2333/1944   315.78947  313.9776       63.15789      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 1.244693   1114/895   378.94737  325.6434       63.15789      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 1.290939  1553/1203   442.10526  337.7427       63.15789      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 1.338904  1442/1077   505.26316  350.2915       63.15789      8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 1.388651   1297/934   568.42105  363.3066       63.15789      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 1.440247  1639/1138   631.57895  376.8053       63.15789     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 1.493759   1077/721   694.73684  390.8055       63.15789     11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 1.549260  2406/1553   757.89474  405.3259       63.15789     12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 1.606822    895/557   821.05263  420.3858       63.15789     13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 1.666524  3893/2336   884.21053  436.0053       63.15789     14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 1.728444  1744/1009   947.36842  452.2051       63.15789     15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 1.792664   1124/627  1010.52632  469.0068       63.15789     16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 1.859271   1123/604  1073.68421  486.4328       63.15789     17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 1.928352   1884/977  1136.84211  504.5062       63.15789     18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 2.000000          2  1200.00000  523.2511       63.15789      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        ratio ratio_frac ratio_cents frequency bent_midi interval_cents degree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 1.000000          1     0.00000  261.6256  60.00000             NA      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1.037155    977/942    63.15789  271.3463  60.63158       63.15789      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1.075691    739/687   126.31579  281.4282  61.26316       63.15789      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 1.115658    627/562   189.47368  291.8846  61.89474       63.15789      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 1.157110   1009/872   252.63158  302.7296  62.52632       63.15789      4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 1.200103  2333/1944   315.78947  313.9776  63.15789       63.15789      5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 1.244693   1114/895   378.94737  325.6434  63.78947       63.15789      6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 1.290939  1553/1203   442.10526  337.7427  64.42105       63.15789      7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 1.338904  1442/1077   505.26316  350.2915  65.05263       63.15789      8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 1.388651   1297/934   568.42105  363.3066  65.68421       63.15789      9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 1.440247  1639/1138   631.57895  376.8053  66.31579       63.15789     10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 1.493759   1077/721   694.73684  390.8055  66.94737       63.15789     11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 1.549260  2406/1553   757.89474  405.3259  67.57895       63.15789     12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 1.606822    895/557   821.05263  420.3858  68.21053       63.15789     13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 1.666524  3893/2336   884.21053  436.0053  68.84211       63.15789     14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 1.728444  1744/1009   947.36842  452.2051  69.47368       63.15789     15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 1.792664   1124/627  1010.52632  469.0068  70.10526       63.15789     16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 1.859271   1123/604  1073.68421  486.4328  70.73684       63.15789     17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 1.928352   1884/977  1136.84211  504.5062  71.36842       63.15789     18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 2.000000          2  1200.00000  523.2511  72.00000       63.15789      0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 31-EDO</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">edo31</span> <span class="op">&lt;-</span> <span class="fu">et_scale_table</span><span class="op">(</span><span class="fl">2.0</span>, <span class="fl">31</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        ratio ratio_frac ratio_cents frequency interval_cents degree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 1.000000          1     0.00000  261.6256             NA      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1.022611  1402/1371    38.70968  267.5413       38.70968      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1.045734  1189/1137    77.41935  273.5908       38.70968      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 1.069380  1156/1081   116.12903  279.7771       38.70968      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 1.093560    900/823   154.83871  286.1032       38.70968      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 1.118287  1645/1471   193.54839  292.5724       38.70968      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 1.143573    685/599   232.25806  299.1879       38.70968      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 1.169431    987/844   270.96774  305.9530       38.70968      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 1.195873  3999/3344   309.67742  312.8710       38.70968      8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 1.222914    982/803   348.38710  319.9455       38.70968      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 1.250566  2211/1768   387.09677  327.1799       38.70968     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 1.278843  3403/2661   425.80645  334.5779       38.70968     11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 1.307759  1500/1147   464.51613  342.1432       38.70968     12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 1.337329    781/584   503.22581  349.8796       38.70968     13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 1.367568    253/185   541.93548  357.7908       38.70968     14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 1.398491  1853/1325   580.64516  365.8810       38.70968     15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 1.430113  2783/1946   619.35484  374.1541       38.70968     16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 1.462450    370/253   658.06452  382.6143       38.70968     17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 1.495518   1168/781   696.77419  391.2657       38.70968     18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 1.529334   1147/750   735.48387  400.1128       38.70968     19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21: 1.563914  2557/1635   774.19355  409.1599       38.70968     20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22: 1.599276  3536/2211   812.90323  418.4116       38.70968     21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23: 1.635438    803/491   851.61290  427.8725       38.70968     22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24: 1.672418  6785/4057   890.32258  437.5473       38.70968     23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25: 1.710234   1387/811   929.03226  447.4409       38.70968     24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26: 1.748905   1198/685   967.74194  457.5582       38.70968     25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27: 1.788450  2942/1645  1006.45161  467.9042       38.70968     26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28: 1.828889    823/450  1045.16129  478.4842       38.70968     27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29: 1.870243   1081/578  1083.87097  489.3034       38.70968     28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30: 1.912532   1465/766  1122.58065  500.3673       38.70968     29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31: 1.955777   1371/701  1161.29032  511.6813       38.70968     30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32: 2.000000          2  1200.00000  523.2511       38.70968      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        ratio ratio_frac ratio_cents frequency interval_cents degree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        ratio ratio_frac ratio_cents frequency bent_midi interval_cents degree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 1.000000          1     0.00000  261.6256  60.00000             NA      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1.022611  1402/1371    38.70968  267.5413  60.38710       38.70968      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1.045734  1189/1137    77.41935  273.5908  60.77419       38.70968      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 1.069380  1156/1081   116.12903  279.7771  61.16129       38.70968      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 1.093560    900/823   154.83871  286.1032  61.54839       38.70968      4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 1.118287  1645/1471   193.54839  292.5724  61.93548       38.70968      5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 1.143573    685/599   232.25806  299.1879  62.32258       38.70968      6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 1.169431    987/844   270.96774  305.9530  62.70968       38.70968      7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 1.195873  3999/3344   309.67742  312.8710  63.09677       38.70968      8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 1.222914    982/803   348.38710  319.9455  63.48387       38.70968      9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 1.250566  2211/1768   387.09677  327.1799  63.87097       38.70968     10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 1.278843  3403/2661   425.80645  334.5779  64.25806       38.70968     11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 1.307759  1500/1147   464.51613  342.1432  64.64516       38.70968     12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 1.337329    781/584   503.22581  349.8796  65.03226       38.70968     13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 1.367568    253/185   541.93548  357.7908  65.41935       38.70968     14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 1.398491  1853/1325   580.64516  365.8810  65.80645       38.70968     15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 1.430113  2783/1946   619.35484  374.1541  66.19355       38.70968     16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 1.462450    370/253   658.06452  382.6143  66.58065       38.70968     17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 1.495518   1168/781   696.77419  391.2657  66.96774       38.70968     18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 1.529334   1147/750   735.48387  400.1128  67.35484       38.70968     19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21: 1.563914  2557/1635   774.19355  409.1599  67.74194       38.70968     20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22: 1.599276  3536/2211   812.90323  418.4116  68.12903       38.70968     21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23: 1.635438    803/491   851.61290  427.8725  68.51613       38.70968     22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24: 1.672418  6785/4057   890.32258  437.5473  68.90323       38.70968     23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25: 1.710234   1387/811   929.03226  447.4409  69.29032       38.70968     24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26: 1.748905   1198/685   967.74194  457.5582  69.67742       38.70968     25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27: 1.788450  2942/1645  1006.45161  467.9042  70.06452       38.70968     26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28: 1.828889    823/450  1045.16129  478.4842  70.45161       38.70968     27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29: 1.870243   1081/578  1083.87097  489.3034  70.83871       38.70968     28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30: 1.912532   1465/766  1122.58065  500.3673  71.22581       38.70968     29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31: 1.955777   1371/701  1161.29032  511.6813  71.61290       38.70968     30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32: 2.000000          2  1200.00000  523.2511  72.00000       38.70968      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        ratio ratio_frac ratio_cents frequency bent_midi interval_cents degree</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># equal-tempered Bohlen-Pierce</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">bohlen_pierce_et</span> <span class="op">&lt;-</span> <span class="fu">et_scale_table</span><span class="op">(</span><span class="fl">3.0</span>, <span class="fl">13</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        ratio ratio_frac ratio_cents frequency interval_cents degree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 1.000000          1      0.0000  261.6256             NA      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1.088182  1197/1100    146.3042  284.6963       146.3042      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1.184141    881/744    292.6085  309.8015       146.3042      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 1.288561  1746/1355    438.9127  337.1204       146.3042      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 1.402189   1025/731    585.2169  366.8485       146.3042      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 1.525837  3691/2419    731.5212  399.1980       146.3042      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 1.660389  2645/1593    877.8254  434.4002       146.3042      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 1.806806   1646/911   1024.1296  472.7066       146.3042      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 1.966134  2090/1063   1170.4338  514.3909       146.3042      8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 2.139512   2101/982   1316.7381  559.7510       146.3042      9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 2.328179   1355/582   1463.0423  609.1111       146.3042     10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 2.533483   1135/448   1609.3465  662.8239       146.3042     11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 2.756891  6101/2213   1755.6508  721.2732       146.3042     12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 3.000000          3   1901.9550  784.8767       146.3042      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        ratio ratio_frac ratio_cents frequency bent_midi interval_cents degree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 1.000000          1      0.0000  261.6256  60.00000             NA      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1.088182  1197/1100    146.3042  284.6963  61.46304       146.3042      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1.184141    881/744    292.6085  309.8015  62.92608       146.3042      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 1.288561  1746/1355    438.9127  337.1204  64.38913       146.3042      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 1.402189   1025/731    585.2169  366.8485  65.85217       146.3042      4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 1.525837  3691/2419    731.5212  399.1980  67.31521       146.3042      5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 1.660389  2645/1593    877.8254  434.4002  68.77825       146.3042      6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 1.806806   1646/911   1024.1296  472.7066  70.24130       146.3042      7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 1.966134  2090/1063   1170.4338  514.3909  71.70434       146.3042      8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 2.139512   2101/982   1316.7381  559.7510  73.16738       146.3042      9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 2.328179   1355/582   1463.0423  609.1111  74.63042       146.3042     10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 2.533483   1135/448   1609.3465  662.8239  76.09347       146.3042     11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 2.756891  6101/2213   1755.6508  721.2732  77.55651       146.3042     12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 3.000000          3   1901.9550  784.8767  79.01955       146.3042      0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Carlos Alpha</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">carlos_alpha</span> <span class="op">&lt;-</span> <span class="fu">et_scale_table</span><span class="op">(</span><span class="fl">1.5</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        ratio ratio_frac ratio_cents frequency interval_cents degree</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 1.000000          1       0.000  261.6256             NA      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1.046082  4472/4275      77.995  273.6818         77.995      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1.094287  1590/1453     155.990  286.2936         77.995      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 1.144714  1321/1154     233.985  299.4865         77.995      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 1.197465  1795/1499     311.980  313.2874         77.995      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 1.252646    947/756     389.975  327.7243         77.995      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 1.310371  1731/1321     467.970  342.8265         77.995      6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 1.370755  1453/1060     545.965  358.6246         77.995      7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 1.433922  2029/1415     623.960  375.1507         77.995      8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 1.500000        3/2     701.955  392.4383         77.995      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        ratio ratio_frac ratio_cents frequency bent_midi interval_cents degree</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 1.000000          1       0.000  261.6256  60.00000             NA      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1.046082  4472/4275      77.995  273.6818  60.77995         77.995      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1.094287  1590/1453     155.990  286.2936  61.55990         77.995      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 1.144714  1321/1154     233.985  299.4865  62.33985         77.995      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 1.197465  1795/1499     311.980  313.2874  63.11980         77.995      4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 1.252646    947/756     389.975  327.7243  63.89975         77.995      5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 1.310371  1731/1321     467.970  342.8265  64.67970         77.995      6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 1.370755  1453/1060     545.965  358.6246  65.45965         77.995      7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 1.433922  2029/1415     623.960  375.1507  66.23960         77.995      8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 1.500000        3/2     701.955  392.4383  67.01955         77.995      0</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

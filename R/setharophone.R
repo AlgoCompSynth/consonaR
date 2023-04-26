@@ -117,7 +117,7 @@ sine_dissonance <- function(freq1, freq2, loud1, loud2) {
 #' @param period The period - default is 2, for an octave
 #' @param divisions Number of degrees in the scale - default is 12
 #' @param root Frequency of the scale root - default is middle C = 261.6256
-#' @returns a `data.table` with six columns:
+#' @returns a `data.table` with seven columns:
 #' \itemize{
 #' \item `ratio`: the ratio that defines the note, as a number between 1 and
 #' `period`
@@ -126,6 +126,12 @@ sine_dissonance <- function(freq1, freq2, loud1, loud2) {
 #' computed by `fractional::fractional`.
 #' \item `ratio_cents`: the ratio in cents (hundredths of a semitone)
 #' \item `frequency`: frequency of the note given the `root` parameter
+#' \item `bent_midi`: the MIDI note number as an integer plus a fraction. For
+#' example, middle C is MIDI note number 60 and middle C sharp is 61. The
+#' quarter-tone half-way between C and C sharp would have a `bent_midi` value
+#' of 60.5. The name `bent_midi` comes from the fact that a MIDI sequencer
+#' can convert the value to a regular integer MIDI note number message and
+#' a pitch bend message.
 #' \item `interval_cents`: interval between this note and the previous note
 #' \item `degree`: scale degree from zero to (number of notes) - 1
 #' }
@@ -155,11 +161,13 @@ et_scale_table <- function(
   ratio <- cents2ratio(ratio_cents)
   ratio_frac <- as.character(fractional::fractional(ratio))
   frequency <- ratio * root
+  bent_midi <- 0.01 * ratio_cents + 60
   scale_table <- data.table::data.table(
     ratio,
     ratio_frac,
     ratio_cents,
-    frequency
+    frequency,
+    bent_midi
   )
   data.table::setkey(scale_table, ratio)
   scale_table <- scale_table[, `:=`(
