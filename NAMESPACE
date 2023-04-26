@@ -3,6 +3,7 @@
 export(cents2ratio)
 export(et_scale_table)
 export(period_reduce)
+export(prodset_scale_table)
 export(ratio2cents)
 export(sclfile_scale_table)
 export(sine_dissonance)

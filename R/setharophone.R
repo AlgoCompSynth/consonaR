@@ -344,3 +344,114 @@ sclfile_scale_table <- function(sclfile_path, tonic_note_number = 60) {
     scale_table = scale_table
   ))
 }
+
+
+#' @title Create Product Set Scale Table
+#' @name prodset_scale_table
+#' @description Creates a scale table from a product set definition
+#' @importFrom data.table data.table
+#' @importFrom data.table setkey
+#' @importFrom data.table ":="
+#' @importFrom data.table ".I"
+#' @importFrom data.table "shift"
+#' @importFrom fractional fractional
+#' @export prodset_scale_table
+#' @param prodset_def the product set scale definition. This is a list of
+#' numeric vector. Each vector is a multiset of any number of integers.
+#' For example, the `prodset_def` of the 1-3-5-7 Hexany is
+#'
+#'   `list(c(1, 3), c(1, 5), c(1, 7), c(3, 5), c(3, 7), c(5, 7))`
+#' @param period the period of the scale - default is 2.
+#' @param tonic_note_number MIDI note number of the tonic for the scale -
+#' - default is middle C = 60
+#' @returns a `data.table` with seven columns:
+#' \itemize{
+#' \item `ratio`: the ratio that defines the note, as a number between 1 and
+#' `period`
+#' \item `ratio_frac`: the ratio as a vulgar fraction (character). The ratios
+#' for this type of scale are usually irrational, so this is an approximation,
+#' computed by `fractional::fractional`.
+#' \item `ratio_cents`: the ratio in cents (hundredths of a semitone)
+#' \item `frequency`: frequency of the note given the `tonic_note_number`
+#' parameter
+#' \item `bent_midi`: the MIDI note number as an integer plus a fraction. For
+#' example, middle C is MIDI note number 60 and middle C sharp is 61. The
+#' quarter-tone half-way between C and C sharp would have a `bent_midi` value
+#' of 60.5. The name `bent_midi` comes from the fact that a MIDI sequencer
+#' can convert the value to a regular integer MIDI note number message and
+#' a pitch bend message.
+#' \item `interval_cents`: interval between this note and the previous note
+#' \item `degree`: scale degree from zero to (number of notes) - 1
+#' }
+#' @examples
+#' \dontrun{
+#' # the default yields the 1-3-5-7-9-11 Eikosany
+#' print(eikosany <- ps_scale_table())
+#'
+#' # Kraig Grady's Eikosany as two complementary extended Dekanies
+#' # See _Microtonality and the Tuning Systems of Erv Wilson_, pages 127 - 131
+#' # for the process used to create these scales
+#' print(grady_a <- ps_scale_table(c(
+#'   "1x3x11",
+#'   "1x9",
+#'   "3x9x11",
+#'   "1x7x11",
+#'   "1x3x7",
+#'   "7x9x11",
+#'   "3x7x9",
+#'   "1x9x11",
+#'   "1x3x9",
+#'   "1x7",
+#'   "3x7x11",
+#'   "1x7x9"
+#' )))
+#' print(grady_a_offsets <- offset_matrix(grady_a))
+#' print(grady_b <- ps_scale_table(c(
+#'   "3x5x11",
+#'   "1x5x9",
+#'   "3x5x9x11",
+#'   "5x7x11",
+#'   "3x5x7",
+#'   "1x5x11",
+#'   "1x3x5",
+#'   "5x9x11",
+#'   "3x5x9",
+#'   "1x5x7",
+#'   "3x5x7x11",
+#'   "5x7x9"
+#' )))
+#' print(grady_b_offsets <- offset_matrix(grady_b))
+#' }
+#'
+
+prodset_scale_table <- function(
+  prodset_def,
+  period = 2,
+  tonic_note_number = 60
+) {
+  degrees <- length(prodset_def)
+  products <- unlist(lapply(prodset_def, FUN = prod))
+  normalizer <- min(products)
+  ratio <- c(sort(period_reduce(products / normalizer, period)), period)
+  ratio_cents <- ratio2cents(ratio)
+
+  # finish up
+  ratio_frac <- as.character(fractional::fractional(ratio))
+  tonic_frequency <- 440 * 2 ^ ((tonic_note_number - 69) / 12)
+  frequency <- ratio * tonic_frequency
+  bent_midi <- 0.01 * ratio_cents + tonic_note_number
+  scale_table <- data.table::data.table(
+    ratio,
+    ratio_frac,
+    ratio_cents,
+    frequency,
+    bent_midi
+  )
+  data.table::setkey(scale_table, ratio)
+  scale_table <- scale_table[, `:=`(
+    interval_cents = ratio_cents - data.table::shift(ratio_cents),
+    degree = .I - 1
+  )]
+  scale_table$degree[degrees + 1] <- 0
+  return(scale_table)
+}
