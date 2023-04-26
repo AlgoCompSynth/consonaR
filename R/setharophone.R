@@ -59,11 +59,11 @@ period_reduce <- function(scale, period = 2.0) {
   return(w)
 }
 
-#' @title Dissonance
-#' @name dissonance
+#' @title Sine Wave Dissonance
+#' @name sine_dissonance
 #' @description Calculates the dissonance function for two sine waves
 #' @importFrom Rdpack reprompt
-#' @export dissonance
+#' @export sine_dissonance
 #' @param freq1 frequency in Hertz of the first sine wave
 #' @param freq2 frequency in Hertz of the second sine wave
 #' @param loud1 loudness of the first sine wave
@@ -74,7 +74,7 @@ period_reduce <- function(scale, period = 2.0) {
 #' @references
 #' \insertAllCited{}
 
-dissonance <- function(freq1, freq2, loud1, loud2) {
+sine_dissonance <- function(freq1, freq2, loud1, loud2) {
   if (freq1 < freq2) {
     f1 <- freq1
     f2 <- freq2
@@ -100,4 +100,72 @@ dissonance <- function(freq1, freq2, loud1, loud2) {
 
   dissonance <- l12 * (exp(B1 * s) - exp(B2 * s))
   return(dissonance)
+}
+
+#' @title Create Equal-Tempered Scale Table
+#' @name et_scale_table
+#' @description Creates a scale table for equal divisions of a specified
+#' period.
+#' @importFrom data.table data.table
+#' @importFrom data.table setkey
+#' @importFrom data.table ":="
+#' @importFrom data.table ".I"
+#' @importFrom data.table "shift"
+#' @importFrom fractional fractional
+#' @importFrom utils globalVariables
+#' @export et_scale_table
+#' @param period The period - default is 2, for an octave
+#' @param divisions Number of degrees in the scale - default is 12
+#' @param root Frequency of the scale root - default is middle C = 261.6256
+#' @returns a `data.table` with six columns:
+#' \itemize{
+#' \item `ratio`: the ratio that defines the note, as a number between 1 and
+#' `period`
+#' \item `ratio_frac`: the ratio as a vulgar fraction (character). The ratios
+#' for this type of scale are usually irrational, so this is an approximation,
+#' computed by `fractional::fractional`.
+#' \item `ratio_cents`: the ratio in cents (hundredths of a semitone)
+#' \item `frequency`: frequency of the note given the `root` parameter
+#' \item `interval_cents`: interval between this note and the previous note
+#' \item `degree`: scale degree from zero to (number of notes) - 1
+#' }
+#' @examples
+#'
+#' print(vanilla <- et_scale_table()) # default is 12EDO, of course
+#'
+#' # 19-EDO
+#' print(edo19 <- et_scale_table(2.0, 19))
+#'
+#' # 31-EDO
+#' print(edo31 <- et_scale_table(2.0, 31))
+#'
+#' # equal-tempered Bohlen-Pierce
+#' print(bohlen_pierce_et <- et_scale_table(3.0, 13))
+#'
+#' # Carlos Alpha
+#' print(carlos_alpha <- et_scale_table(1.5, 9))
+
+et_scale_table <- function(
+    period = 2.0,
+    divisions = 12,
+    root = 440 / (2 ^ 0.75)
+  ) {
+  degree <- seq(0, divisions)
+  ratio_cents <- degree * ratio2cents(period) / divisions
+  ratio <- cents2ratio(ratio_cents)
+  ratio_frac <- as.character(fractional::fractional(ratio))
+  frequency <- ratio * root
+  scale_table <- data.table::data.table(
+    ratio,
+    ratio_frac,
+    ratio_cents,
+    frequency
+  )
+  data.table::setkey(scale_table, ratio)
+  scale_table <- scale_table[, `:=`(
+    interval_cents = ratio_cents - data.table::shift(ratio_cents),
+    degree = .I - 1
+  )]
+  scale_table$degree[divisions + 1] <- 0
+  return(scale_table)
 }
