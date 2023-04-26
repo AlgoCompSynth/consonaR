@@ -223,6 +223,8 @@ et_scale_table <- function(
 #' ))
 #' if (cents$status == "Oll Korrect") {
 #'   print(cents$scale_table)
+#' } else {
+#'   print(cents$status)
 #' }
 #'
 #' # a file with ratios specified as vulgar fractions
@@ -232,15 +234,52 @@ et_scale_table <- function(
 #' ))
 #' if (ratios$status == "Oll Korrect") {
 #'   print(ratios$scale_table)
+#' } else {
+#'   print(ratios$status)
+#' }
+#'
+#' # a file that doesn't exist
+#' nosuch <- sclfile_scale_table(system.file(
+#'   "carlo_scl_iles/carlos_harm.scl",
+#'   package = "setharophone"
+#' ))
+#' if (nosuch$status == "Oll Korrect") {
+#'   print(nosuch$scale_table)
+#' } else {
+#'   print(nosuch$status)
 #' }
 #'
 
 sclfile_scale_table <- function(sclfile_path, tonic_note_number = 60) {
-  file_contents <- readLines(sclfile_path)
+
+  # bail if the file can't be opened for reading text
+  previous_warn_option <- as.integer(options(warn = 2))
+  connection <- try(file(sclfile_path, open = "rt"), silent = TRUE)
+  options(warn = previous_warn_option)
+
+  if (inherits(connection, "try-error")) {
+    return(list(
+      status =
+        paste0("cannot open file '", sclfile_path, "' for reading text" )
+    ))
+  }
+
+  # read the file and close the connection
+  file_contents <- readLines(connection)
+  close(connection)
 
   # remove comments
   raw <- grep("^!", file_contents, value = TRUE, invert = TRUE)
-  raw <- raw[2:length(raw)]
+  raw <- raw[2:length(raw)] # first line is a comment
+
+  # number of degrees must be at least two so there must be at least three
+  # lines remaining
+  if (length(raw) < 3) {
+    return(list(
+      status = paste0("fewer than three lines in file '", sclfile_path, "'"),
+      file_contents = file_contents
+    ))
+  }
 
   # get scale degrees
   degrees <- as.numeric(raw[1])

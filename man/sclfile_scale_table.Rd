@@ -47,6 +47,8 @@ cents <- sclfile_scale_table(system.file(
 ))
 if (cents$status == "Oll Korrect") {
   print(cents$scale_table)
+} else {
+  print(cents$status)
 }
 
 # a file with ratios specified as vulgar fractions
@@ -56,6 +58,19 @@ ratios <- sclfile_scale_table(system.file(
 ))
 if (ratios$status == "Oll Korrect") {
   print(ratios$scale_table)
+} else {
+  print(ratios$status)
+}
+
+# a file that doesn't exist
+nosuch <- sclfile_scale_table(system.file(
+  "carlo_scl_iles/carlos_harm.scl",
+  package = "setharophone"
+))
+if (nosuch$status == "Oll Korrect") {
+  print(nosuch$scale_table)
+} else {
+  print(nosuch$status)
 }
 
 }
