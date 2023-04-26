@@ -180,3 +180,128 @@ et_scale_table <- function(
   scale_table$degree[divisions + 1] <- 0
   return(scale_table)
 }
+
+#' @title Create Scale Table From a Scala `.scl` File
+#' @name sclfile_scale_table
+#' @description Creates a scale table from a given `.scl` file
+#' @importFrom data.table data.table
+#' @importFrom data.table setkey
+#' @importFrom data.table ":="
+#' @importFrom data.table ".I"
+#' @importFrom data.table "shift"
+#' @importFrom fractional fractional
+#' @importFrom utils globalVariables
+#' @export sclfile_scale_table
+#' @param sclfile_path The path to a valid Scala `.scl` file
+#' @param tonic_note_number MIDI note number of the tonic for the scale -
+#' - default is middle C = 60
+#' @returns a `data.table` with seven columns:
+#' \itemize{
+#' \item `ratio`: the ratio that defines the note, as a number between 1 and
+#' `period`
+#' \item `ratio_frac`: the ratio as a vulgar fraction (character). The ratios
+#' for this type of scale are usually irrational, so this is an approximation,
+#' computed by `fractional::fractional`.
+#' \item `ratio_cents`: the ratio in cents (hundredths of a semitone)
+#' \item `frequency`: frequency of the note given the `tonic_note_number`
+#' parameter
+#' \item `bent_midi`: the MIDI note number as an integer plus a fraction. For
+#' example, middle C is MIDI note number 60 and middle C sharp is 61. The
+#' quarter-tone half-way between C and C sharp would have a `bent_midi` value
+#' of 60.5. The name `bent_midi` comes from the fact that a MIDI sequencer
+#' can convert the value to a regular integer MIDI note number message and
+#' a pitch bend message.
+#' \item `interval_cents`: interval between this note and the previous note
+#' \item `degree`: scale degree from zero to (number of notes) - 1
+#' }
+#' @examples
+#'
+#' # a file with ratios specified in cents
+#' cents <- sclfile_scale_table(system.file(
+#'   "Carlos_scl_files/carlos_alpha.scl",
+#'   package = "setharophone"
+#' ))
+#' if (cents$status == "Oll Korrect") {
+#'   print(cents$scale_table)
+#' }
+#'
+#' # a file with ratios specified as vulgar fractions
+#' ratios <- sclfile_scale_table(system.file(
+#'   "Carlos_scl_files/carlos_harm.scl",
+#'   package = "setharophone"
+#' ))
+#' if (ratios$status == "Oll Korrect") {
+#'   print(ratios$scale_table)
+#' }
+#'
+
+sclfile_scale_table <- function(sclfile_path, tonic_note_number = 60) {
+  file_contents <- readLines(sclfile_path)
+
+  # remove comments
+  raw <- grep("^!", file_contents, value = TRUE, invert = TRUE)
+  raw <- raw[2:length(raw)]
+
+  # get scale degrees
+  degrees <- as.numeric(raw[1])
+  raw <- raw[2:length(raw)]
+  degree <- seq(0, degrees)
+
+  # check length
+  if (degrees != length(raw)) {
+    return(list(
+      status = "file length error",
+      file_contents = file_contents
+    ))
+  }
+
+  if (length(grep("/", raw, fixed = TRUE)) == degrees) {
+
+    # fractional ratios - parse
+    ratio <- vapply(
+        c(" 1/1", raw),
+        FUN = function(x) eval(parse(text = x)),
+        FUN.VALUE = 1
+    )
+    ratio_cents <- ratio2cents(ratio)
+  } else if (length(grep(".", raw, fixed = TRUE)) == degrees) {
+
+    # cents ratios
+    ratio_cents <- vapply(
+      c(" 0.0", raw),
+      FUN = function(x) eval(parse(text = x)),
+      FUN.VALUE = 1
+    )
+    ratio <- cents2ratio(ratio_cents)
+  } else {
+    return(list(
+      status = "incorrect ratio format(s)",
+      file_contents = file_contents
+    ))
+  }
+
+  # finish up
+  ratio_frac <- as.character(fractional::fractional(ratio))
+  tonic_frequency <- 440 * 2 ^ ((tonic_note_number - 69) / 12)
+  frequency <- ratio * tonic_frequency
+  bent_midi <- 0.01 * ratio_cents + tonic_note_number
+  scale_table <- data.table::data.table(
+    ratio,
+    ratio_frac,
+    ratio_cents,
+    frequency,
+    bent_midi
+  )
+  data.table::setkey(scale_table, ratio)
+  scale_table <- scale_table[, `:=`(
+    interval_cents = ratio_cents - data.table::shift(ratio_cents),
+    degree = .I - 1
+  )]
+  scale_table$degree[degrees + 1] <- 0
+
+  return(list(
+    status = "Oll Korrect",
+    file_contents = file_contents,
+    scale_table = scale_table
+  ))
+}
