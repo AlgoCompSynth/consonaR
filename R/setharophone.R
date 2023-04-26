@@ -116,7 +116,8 @@ sine_dissonance <- function(freq1, freq2, loud1, loud2) {
 #' @export et_scale_table
 #' @param period The period - default is 2, for an octave
 #' @param divisions Number of degrees in the scale - default is 12
-#' @param root Frequency of the scale root - default is middle C = 261.6256
+#' @param tonic_note_number MIDI note number of the tonic for the scale -
+#' - default is middle C = 60
 #' @returns a `data.table` with seven columns:
 #' \itemize{
 #' \item `ratio`: the ratio that defines the note, as a number between 1 and
@@ -125,7 +126,8 @@ sine_dissonance <- function(freq1, freq2, loud1, loud2) {
 #' for this type of scale are usually irrational, so this is an approximation,
 #' computed by `fractional::fractional`.
 #' \item `ratio_cents`: the ratio in cents (hundredths of a semitone)
-#' \item `frequency`: frequency of the note given the `root` parameter
+#' \item `frequency`: frequency of the note given the `tonic_note_number`
+#' parameter
 #' \item `bent_midi`: the MIDI note number as an integer plus a fraction. For
 #' example, middle C is MIDI note number 60 and middle C sharp is 61. The
 #' quarter-tone half-way between C and C sharp would have a `bent_midi` value
@@ -154,14 +156,15 @@ sine_dissonance <- function(freq1, freq2, loud1, loud2) {
 et_scale_table <- function(
     period = 2.0,
     divisions = 12,
-    root = 440 / (2 ^ 0.75)
+    tonic_note_number = 60
   ) {
   degree <- seq(0, divisions)
   ratio_cents <- degree * ratio2cents(period) / divisions
   ratio <- cents2ratio(ratio_cents)
   ratio_frac <- as.character(fractional::fractional(ratio))
-  frequency <- ratio * root
-  bent_midi <- 0.01 * ratio_cents + 60
+  tonic_frequency <- 440 * 2 ^ ((tonic_note_number - 69) / 12)
+  frequency <- ratio * tonic_frequency
+  bent_midi <- 0.01 * ratio_cents + tonic_note_number
   scale_table <- data.table::data.table(
     ratio,
     ratio_frac,

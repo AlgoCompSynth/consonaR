@@ -4,14 +4,17 @@
 \alias{et_scale_table}
 \title{Create Equal-Tempered Scale Table}
 \usage{
-et_scale_table(period = 2, divisions = 12, root = 440/(2^0.75))
+et_scale_table(period = 2, divisions = 12, tonic_note_number = 60)
 }
 \arguments{
 \item{period}{The period - default is 2, for an octave}
 
 \item{divisions}{Number of degrees in the scale - default is 12}
 
-\item{root}{Frequency of the scale root - default is middle C = 261.6256}
+\item{tonic_note_number}{MIDI note number of the tonic for the scale -
+\itemize{
+\item default is middle C = 60
+}}
 }
 \value{
 a \code{data.table} with seven columns:
@@ -22,7 +25,8 @@ a \code{data.table} with seven columns:
 for this type of scale are usually irrational, so this is an approximation,
 computed by \code{fractional::fractional}.
 \item \code{ratio_cents}: the ratio in cents (hundredths of a semitone)
-\item \code{frequency}: frequency of the note given the \code{root} parameter
+\item \code{frequency}: frequency of the note given the \code{tonic_note_number}
+parameter
 \item \code{bent_midi}: the MIDI note number as an integer plus a fraction. For
 example, middle C is MIDI note number 60 and middle C sharp is 61. The
 quarter-tone half-way between C and C sharp would have a \code{bent_midi} value

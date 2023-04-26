@@ -58,7 +58,7 @@ period.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">et_scale_table</span><span class="op">(</span>period <span class="op">=</span> <span class="fl">2</span>, divisions <span class="op">=</span> <span class="fl">12</span>, root <span class="op">=</span> <span class="fl">440</span><span class="op">/</span><span class="op">(</span><span class="fl">2</span><span class="op">^</span><span class="fl">0.75</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">et_scale_table</span><span class="op">(</span>period <span class="op">=</span> <span class="fl">2</span>, divisions <span class="op">=</span> <span class="fl">12</span>, tonic_note_number <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -71,8 +71,9 @@ period.</p>
 <dd><p>Number of degrees in the scale - default is 12</p></dd>
 
 
-<dt>root</dt>
-<dd><p>Frequency of the scale root - default is middle C = 261.6256</p></dd>
+<dt>tonic_note_number</dt>
+<dd><p>MIDI note number of the tonic for the scale -</p><ul><li><p>default is middle C = 60</p></li>
+</ul></dd>
 
 </dl></div>
     <div class="section level2">
@@ -85,7 +86,8 @@ period.</p>
 for this type of scale are usually irrational, so this is an approximation,
 computed by <code><a href="https://rdrr.io/pkg/fractional/man/fractional.html" class="external-link">fractional::fractional</a></code>.</p></li>
 <li><p><code>ratio_cents</code>: the ratio in cents (hundredths of a semitone)</p></li>
-<li><p><code>frequency</code>: frequency of the note given the <code>root</code> parameter</p></li>
+<li><p><code>frequency</code>: frequency of the note given the <code>tonic_note_number</code>
+parameter</p></li>
 <li><p><code>bent_midi</code>: the MIDI note number as an integer plus a fraction. For
 example, middle C is MIDI note number 60 and middle C sharp is 61. The
 quarter-tone half-way between C and C sharp would have a <code>bent_midi</code> value
