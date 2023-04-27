@@ -4,15 +4,6 @@
     <loc>https://algocompsynth.github.io/setharophone/404.html</loc>
   </url>
   <url>
-    <loc>https://algocompsynth.github.io/setharophone/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://algocompsynth.github.io/setharophone/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://algocompsynth.github.io/setharophone/LICENSE.html</loc>
-  </url>
-  <url>
     <loc>https://algocompsynth.github.io/setharophone/articles/about-scale-tables.html</loc>
   </url>
   <url>
@@ -25,7 +16,16 @@
     <loc>https://algocompsynth.github.io/setharophone/authors.html</loc>
   </url>
   <url>
+    <loc>https://algocompsynth.github.io/setharophone/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://algocompsynth.github.io/setharophone/CONTRIBUTING.html</loc>
+  </url>
+  <url>
     <loc>https://algocompsynth.github.io/setharophone/index.html</loc>
+  </url>
+  <url>
+    <loc>https://algocompsynth.github.io/setharophone/LICENSE.html</loc>
   </url>
   <url>
     <loc>https://algocompsynth.github.io/setharophone/reference/cents2ratio.html</loc>
@@ -47,6 +47,9 @@
   </url>
   <url>
     <loc>https://algocompsynth.github.io/setharophone/reference/ratio2cents.html</loc>
+  </url>
+  <url>
+    <loc>https://algocompsynth.github.io/setharophone/reference/ratio2factors.html</loc>
   </url>
   <url>
     <loc>https://algocompsynth.github.io/setharophone/reference/sclfile_scale_table.html</loc>
