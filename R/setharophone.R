@@ -70,8 +70,9 @@ ratio2factors <- function(ratio) {
   # get rid of the denominators
   lcm_denoms <- numbers::mLCM(fractional::denominators(ratio))
   integers <- as.list(lcm_denoms * ratio)
-  factors <- lapply(integers, numbers::primeFactors)
-  return(factors)
+  names(integers) <- as.character(integers)
+  prime_factors <- lapply(integers, FUN = numbers::primeFactors)
+  return(prime_factors)
 }
 
 #' @title Period Reduce
