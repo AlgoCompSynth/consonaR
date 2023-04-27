@@ -45,43 +45,13 @@ a pitch bend message.
 Creates a scale table from a product set definition
 }
 \examples{
-\dontrun{
-# the default yields the 1-3-5-7-9-11 Eikosany
-print(eikosany <- ps_scale_table())
-
-# Kraig Grady's Eikosany as two complementary extended Dekanies
-# See _Microtonality and the Tuning Systems of Erv Wilson_, pages 127 - 131
-# for the process used to create these scales
-print(grady_a <- ps_scale_table(c(
-  "1x3x11",
-  "1x9",
-  "3x9x11",
-  "1x7x11",
-  "1x3x7",
-  "7x9x11",
-  "3x7x9",
-  "1x9x11",
-  "1x3x9",
-  "1x7",
-  "3x7x11",
-  "1x7x9"
+(hexany <- prodset_scale_table(list(
+  c(1, 3),
+  c(1, 5),
+  c(1, 7),
+  c(3, 5),
+  c(3, 7),
+  c(5, 7)
 )))
-print(grady_a_offsets <- offset_matrix(grady_a))
-print(grady_b <- ps_scale_table(c(
-  "3x5x11",
-  "1x5x9",
-  "3x5x9x11",
-  "5x7x11",
-  "3x5x7",
-  "1x5x11",
-  "1x3x5",
-  "5x9x11",
-  "3x5x9",
-  "1x5x7",
-  "3x5x7x11",
-  "5x7x9"
-)))
-print(grady_b_offsets <- offset_matrix(grady_b))
-}
 
 }

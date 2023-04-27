@@ -42,7 +42,7 @@ Creates a scale table from a given \code{.scl} file
 
 # a file with ratios specified in cents
 cents <- sclfile_scale_table(system.file(
-  "Carlos_scl_files/carlos_alpha.scl",
+  "test_scl_files/carlos_alpha.scl",
   package = "setharophone"
 ))
 if (cents$status == "Oll Korrect") {
@@ -53,7 +53,7 @@ if (cents$status == "Oll Korrect") {
 
 # a file with ratios specified as vulgar fractions
 ratios <- sclfile_scale_table(system.file(
-  "Carlos_scl_files/carlos_harm.scl",
+  "test_scl_files/carlos_harm.scl",
   package = "setharophone"
 ))
 if (ratios$status == "Oll Korrect") {

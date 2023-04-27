@@ -29,6 +29,51 @@ ratio2cents <- function(ratio) {
   return(log2(ratio) * 1200)
 }
 
+#' @title Ratio to Factors
+#' @name ratio2factors
+#' @description Converts a vector of ratios to a vector of the corresponding
+#' integer factors.
+#' @importFrom numbers mLCM
+#' @importFrom fractional denominators
+#' @export ratio2factors
+#' @param ratio a numeric vector of ratios
+#' @returns a list of vectors, with each vector the integer factors that
+#' determined the corresponding ratio
+#' @examples
+#' (super <- sclfile_scale_table(system.file(
+#'   "test_scl_files/carlos_super.scl",
+#'   package = "setharophone"
+#' ))$scale_table$ratio)
+#' (super_factors <- ratio2factors(super))
+#'
+#' (harm <- sclfile_scale_table(system.file(
+#'   "test_scl_files/carlos_harm.scl",
+#'   package = "setharophone"
+#' ))$scale_table$ratio)
+#' (harm_factors <- ratio2factors(harm))
+#'
+#' # we know the factors that yield the 1-3-5-7 Hexany
+#' # can we recover them?
+#' (hexany <- prodset_scale_table(list(
+#'   c(1, 3),
+#'   c(1, 5),
+#'   c(1, 7),
+#'   c(3, 5),
+#'   c(3, 7),
+#'   c(5, 7)
+#' ))$ratio)
+#' (hexany_factors <- ratio2factors(hexany))
+#'
+
+ratio2factors <- function(ratio) {
+
+  # get rid of the denominators
+  lcm_denoms <- numbers::mLCM(fractional::denominators(ratio))
+  integers <- as.list(lcm_denoms * ratio)
+  factors <- lapply(integers, numbers::primeFactors)
+  return(factors)
+}
+
 #' @title Period Reduce
 #' @name period_reduce
 #' @description Reduce a vector of ratios to a given period
@@ -218,7 +263,7 @@ et_scale_table <- function(
 #'
 #' # a file with ratios specified in cents
 #' cents <- sclfile_scale_table(system.file(
-#'   "Carlos_scl_files/carlos_alpha.scl",
+#'   "test_scl_files/carlos_alpha.scl",
 #'   package = "setharophone"
 #' ))
 #' if (cents$status == "Oll Korrect") {
@@ -229,7 +274,7 @@ et_scale_table <- function(
 #'
 #' # a file with ratios specified as vulgar fractions
 #' ratios <- sclfile_scale_table(system.file(
-#'   "Carlos_scl_files/carlos_harm.scl",
+#'   "test_scl_files/carlos_harm.scl",
 #'   package = "setharophone"
 #' ))
 #' if (ratios$status == "Oll Korrect") {
@@ -345,7 +390,6 @@ sclfile_scale_table <- function(sclfile_path, tonic_note_number = 60) {
   ))
 }
 
-
 #' @title Create Product Set Scale Table
 #' @name prodset_scale_table
 #' @description Creates a scale table from a product set definition
@@ -384,44 +428,14 @@ sclfile_scale_table <- function(sclfile_path, tonic_note_number = 60) {
 #' \item `degree`: scale degree from zero to (number of notes) - 1
 #' }
 #' @examples
-#' \dontrun{
-#' # the default yields the 1-3-5-7-9-11 Eikosany
-#' print(eikosany <- ps_scale_table())
-#'
-#' # Kraig Grady's Eikosany as two complementary extended Dekanies
-#' # See _Microtonality and the Tuning Systems of Erv Wilson_, pages 127 - 131
-#' # for the process used to create these scales
-#' print(grady_a <- ps_scale_table(c(
-#'   "1x3x11",
-#'   "1x9",
-#'   "3x9x11",
-#'   "1x7x11",
-#'   "1x3x7",
-#'   "7x9x11",
-#'   "3x7x9",
-#'   "1x9x11",
-#'   "1x3x9",
-#'   "1x7",
-#'   "3x7x11",
-#'   "1x7x9"
+#' (hexany <- prodset_scale_table(list(
+#'   c(1, 3),
+#'   c(1, 5),
+#'   c(1, 7),
+#'   c(3, 5),
+#'   c(3, 7),
+#'   c(5, 7)
 #' )))
-#' print(grady_a_offsets <- offset_matrix(grady_a))
-#' print(grady_b <- ps_scale_table(c(
-#'   "3x5x11",
-#'   "1x5x9",
-#'   "3x5x9x11",
-#'   "5x7x11",
-#'   "3x5x7",
-#'   "1x5x11",
-#'   "1x3x5",
-#'   "5x9x11",
-#'   "3x5x9",
-#'   "1x5x7",
-#'   "3x5x7x11",
-#'   "5x7x9"
-#' )))
-#' print(grady_b_offsets <- offset_matrix(grady_b))
-#' }
 #'
 
 prodset_scale_table <- function(

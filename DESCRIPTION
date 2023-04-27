@@ -16,6 +16,7 @@ RoxygenNote: 7.2.3
 Imports:
     data.table,
     fractional,
+    numbers,
     Rdpack
 RdMacros: Rdpack
 Suggests: 
