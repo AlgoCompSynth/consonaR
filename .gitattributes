@@ -1,7 +1,7 @@
 README.* text eol=lf
 DESCRIPTION text eof=lf
 NAMESPACE text eof=lf
-setharophone.Rproj text eol=lf
+consonaR.Rproj text eol=lf
 .Rbuildignore text eof=lf
 *.xml text eof=lf
 *.yml text eof=lf

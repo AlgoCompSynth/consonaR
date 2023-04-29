@@ -1,10 +1,11 @@
-setharophone - Composing with Musical Scales and Spectra
+consonaR - Consonance-based composing with Musical Scales and Spectra
 ================
 
 ## Overview
 
-`setharophone` implements algorithms for composing music, based on
-William Sethares’ *Tuning, Timbre, Spectrum, Scale* (Sethares 2013).
+`consonaR` implements consonance-based algorithms for composing music,
+based on William Sethares’ *Tuning, Timbre, Spectrum, Scale* (Sethares
+2013).
 
 ## References
 

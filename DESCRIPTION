@@ -1,15 +1,16 @@
-Package: setharophone
-Title: setharophone - Composing with Musical Scales and Spectra
+Package: consonaR
+Title: consonaR - Consonance-based composing with Musical Scales and Spectra
 Version: 0.0.0.9000
 Authors@R: 
     person("M. Edward (Ed)", "Borasky", , "znmeb@algocompsynth.com",
            role = c("aut", "cre"))
-Description: `setharophone` implements algorithms for composing music, based on
-             William Sethares' +Tuning, Timbre, Spectrum, Scale_.
+Description: `consonaR` implements consonance-based algorithms for composing
+             music, based on William Sethares' _Tuning, Timbre, Spectrum,
+             Scale_.
 License: GPL (>= 3)
-URL: https://algocompsynth.github.io/setharophone/,
-    https://github.com/AlgoCompSynth/setharophone
-BugReports: https://github.com/AlgoCompSynth/setharophone/issues
+URL: https://algocompsynth.github.io/consonaR/,
+    https://github.com/AlgoCompSynth/consonaR
+BugReports: https://github.com/AlgoCompSynth/consonaR/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
@@ -20,6 +21,8 @@ Imports:
     Rdpack
 RdMacros: Rdpack
 Suggests: 
+    devtools,
     knitr,
+    pkgdown,
     rmarkdown
 VignetteBuilder: knitr

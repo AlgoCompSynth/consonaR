@@ -42,13 +42,13 @@ ratio2cents <- function(ratio) {
 #' @examples
 #' (super <- sclfile_scale_table(system.file(
 #'   "test_scl_files/carlos_super.scl",
-#'   package = "setharophone"
+#'   package = "consonaR"
 #' ))$scale_table$ratio)
 #' (super_factors <- ratio2factors(super))
 #'
 #' (harm <- sclfile_scale_table(system.file(
 #'   "test_scl_files/carlos_harm.scl",
-#'   package = "setharophone"
+#'   package = "consonaR"
 #' ))$scale_table$ratio)
 #' (harm_factors <- ratio2factors(harm))
 #'
@@ -116,7 +116,7 @@ period_reduce <- function(scale, period = 2.0) {
 #' @param loud2 loudness of the second sine wave
 #' @returns the dissonance value
 #' @details This algorithm comes from Appendix E of
-#' \insertCite{sethares2013tuning}{setharophone}
+#' \insertCite{sethares2013tuning}{consonaR}
 #' @references
 #' \insertAllCited{}
 
@@ -265,7 +265,7 @@ et_scale_table <- function(
 #' # a file with ratios specified in cents
 #' cents <- sclfile_scale_table(system.file(
 #'   "test_scl_files/carlos_alpha.scl",
-#'   package = "setharophone"
+#'   package = "consonaR"
 #' ))
 #' if (cents$status == "Oll Korrect") {
 #'   print(cents$scale_table)
@@ -276,7 +276,7 @@ et_scale_table <- function(
 #' # a file with ratios specified as vulgar fractions
 #' ratios <- sclfile_scale_table(system.file(
 #'   "test_scl_files/carlos_harm.scl",
-#'   package = "setharophone"
+#'   package = "consonaR"
 #' ))
 #' if (ratios$status == "Oll Korrect") {
 #'   print(ratios$scale_table)
@@ -287,7 +287,7 @@ et_scale_table <- function(
 #' # a file that doesn't exist
 #' nosuch <- sclfile_scale_table(system.file(
 #'   "carlo_scl_iles/carlos_harm.scl",
-#'   package = "setharophone"
+#'   package = "consonaR"
 #' ))
 #' if (nosuch$status == "Oll Korrect") {
 #'   print(nosuch$scale_table)
