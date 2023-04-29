@@ -15,14 +15,16 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports:
-    data.table,
-    fractional,
-    numbers,
-    Rdpack
+    data.table (>= 1.14.8),
+    fractional (>= 0.1.3),
+    numbers (>= 0.8.5),
+    Rdpack (>= 2.4)
 RdMacros: Rdpack
 Suggests: 
-    devtools,
-    knitr,
-    pkgdown,
-    rmarkdown
+    devtools (>= 2.4.5),
+    knitr (>= 1.42),
+    pkgdown (>= 2.0.7),
+    rmarkdown (>= 2.21)
+Depends:
+    R (>= 4.3.0)
 VignetteBuilder: knitr
