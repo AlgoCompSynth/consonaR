@@ -26,5 +26,5 @@ Suggests:
     pkgdown (>= 2.0.7),
     rmarkdown (>= 2.21)
 Depends:
-    R (>= 4.3.0)
+    R (>= 4.2.0)
 VignetteBuilder: knitr
