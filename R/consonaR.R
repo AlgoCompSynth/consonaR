@@ -1,3 +1,43 @@
+#' @title Frequency to MIDI note number
+#' @name freq2MIDI
+#' @description Converts a vector of frequencies to a vector of the corresponding
+#' MIDI note numbers. Note that these MIDI note numbers are ***floating point***
+#' values - for example, MIDI note number 60.5 is the quarter-tone between
+#' middle C (60) and middle C# (61).
+#' @export freq2MIDI
+#' @param freq a numeric vector of frequency values
+#' @returns a numeric vector of the corresponding MIDI note numbers
+#' @examples
+#'
+#'   # chromatic scale
+#'   freq <- 2 ^ (seq(0, 12) / 12) * 220
+#'   print(freq2MIDI(freq))
+#'
+
+freq2MIDI <- function(freq) {
+  return(69 + log2(freq / 440) * 12)
+}
+
+#' @title MIDI note number to frequency
+#' @name MIDI2freq
+#' @description Converts a vector of MIDI note numbers to a vector of the
+#' corresponding frequencies. Note that these MIDI note numbers are
+#' ***floating point***values - for example, MIDI note number 60.5 is the
+#' quarter-tone between middle C (60) and middle C# (61).
+#' @export MIDI2freq
+#' @param MIDI a numeric vector of MIDI note numbers
+#' @returns a numeric vector of the corresponding frequencies
+#' @examples
+#'
+#'   # quarter-tone scale
+#'   MIDI <- seq(60, 72, by = 0.5)
+#'   print(MIDI2freq(MIDI))
+#'
+
+MIDI2freq <- function(MIDI) {
+  return(2 ^ ((MIDI - 69) / 12) * 440)
+}
+
 #' @title Cents to Ratio
 #' @name cents2ratio
 #' @description Converts a vector of cents to a vector of the corresponding
