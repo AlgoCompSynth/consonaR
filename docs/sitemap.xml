@@ -37,7 +37,13 @@
     <loc>https://algocompsynth.github.io/consonaR/reference/et_scale_table.html</loc>
   </url>
   <url>
+    <loc>https://algocompsynth.github.io/consonaR/reference/freq2MIDI.html</loc>
+  </url>
+  <url>
     <loc>https://algocompsynth.github.io/consonaR/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://algocompsynth.github.io/consonaR/reference/MIDI2freq.html</loc>
   </url>
   <url>
     <loc>https://algocompsynth.github.io/consonaR/reference/period_reduce.html</loc>
