@@ -96,17 +96,17 @@ cents2frac <- function(cents) {
 #' @returns a list of vectors, with each vector the integer factors that
 #' determined the corresponding ratio
 #' @examples
-#' (super <- sclfile_scale_table(system.file(
+#' print(super <- sclfile_scale_table(system.file(
 #'   "test_scl_files/carlos_super.scl",
 #'   package = "consonaR"
-#' ))$scale_table$ratio)
-#' (super_factors <- ratio2factors(super))
+#' ))$scale_table)
+#' print(super_factors <- ratio2factors(cents2ratio(super$ratio_cents)))
 #'
-#' (harm <- sclfile_scale_table(system.file(
+#' print(harm <- sclfile_scale_table(system.file(
 #'   "test_scl_files/carlos_harm.scl",
 #'   package = "consonaR"
-#' ))$scale_table$ratio)
-#' (harm_factors <- ratio2factors(harm))
+#' ))$scale_table)
+#' print(harm_factors <- ratio2factors(cents2ratio(harm$ratio_cents)))
 #'
 #' # we know the factors that yield the 1-3-5-7 Hexany
 #' # can we recover them?
@@ -216,8 +216,7 @@ sine_dissonance <- function(freq1, freq2, loud1, loud2) {
 #' @export et_scale_table
 #' @param period The period - default is 2, for an octave
 #' @param divisions Number of degrees in the scale - default is 12
-#' @param root_freq root frequency of the scale - default is middle C
-#' MIDI note number of the tonic for the scale - default is middle C:
+#' @param root_freq root frequency of the scale - default is middle C:
 #' 440 / (2 ^ (9 / 12))
 #' @returns a `data.table` with six columns:
 #' \itemize{
@@ -281,55 +280,52 @@ et_scale_table <- function(
 #' @importFrom data.table data.table
 #' @importFrom data.table setkey
 #' @importFrom data.table ":="
-#' @importFrom data.table ".I"
 #' @importFrom data.table "shift"
-#' @importFrom fractional fractional
 #' @importFrom utils globalVariables
 #' @export sclfile_scale_table
 #' @param sclfile_path The path to a valid Scala `.scl` file
-#' @param tonic_note_number MIDI note number of the tonic for the scale -
-#' - default is middle C = 60
-#' @returns a `data.table` with seven columns:
+#' @param root_freq root frequency of the scale - default is middle C:
+#' 440 / (2 ^ (9 / 12))
+#' @returns a list with two or three items:
 #' \itemize{
-#' \item `ratio`: the ratio that defines the note, as a number between 1 and
-#' `period`
-#' \item `ratio_frac`: the ratio as a vulgar fraction (character). The ratios
-#' for this type of scale are usually irrational, so this is an approximation,
-#' computed by `fractional::fractional`.
-#' \item `ratio_cents`: the ratio in cents (hundredths of a semitone)
-#' \item `frequency`: frequency of the note given the `tonic_note_number`
-#' parameter
-#' \item `bent_midi`: the MIDI note number as an integer plus a fraction. For
-#' example, middle C is MIDI note number 60 and middle C sharp is 61. The
-#' quarter-tone half-way between C and C sharp would have a `bent_midi` value
-#' of 60.5. The name `bent_midi` comes from the fact that a MIDI sequencer
-#' can convert the value to a regular integer MIDI note number message and
-#' a pitch bend message.
-#' \item `interval_cents`: interval between this note and the previous note
-#' \item `degree`: scale degree from zero to (number of notes) - 1
+#' \item `status` (character): "Oll Korrect" if the results are valid,
+#' otherwise an error message
+#' \item `file_contents` (character vector): the contents read from the file
+#' \item `scale_table` (data.table): if everything worked, the scale table
 #' }
 #' @examples
 #'
 #' # a file with ratios specified in cents
-#' cents <- sclfile_scale_table(system.file(
+#' alpha <- sclfile_scale_table(system.file(
 #'   "test_scl_files/carlos_alpha.scl",
 #'   package = "consonaR"
 #' ))
-#' if (cents$status == "Oll Korrect") {
-#'   print(cents$scale_table)
+#' if (alpha$status == "Oll Korrect") {
+#'   print(alpha$scale_table)
 #' } else {
-#'   print(cents$status)
+#'   print(alpha$status)
 #' }
 #'
 #' # a file with ratios specified as vulgar fractions
-#' ratios <- sclfile_scale_table(system.file(
+#' harm <- sclfile_scale_table(system.file(
 #'   "test_scl_files/carlos_harm.scl",
 #'   package = "consonaR"
 #' ))
-#' if (ratios$status == "Oll Korrect") {
-#'   print(ratios$scale_table)
+#' if (harm$status == "Oll Korrect") {
+#'   print(harm$scale_table)
 #' } else {
-#'   print(ratios$status)
+#'   print(harm$status)
+#' }
+#'
+#' # another file with ratios specified as vulgar fractions
+#' super <- sclfile_scale_table(system.file(
+#'   "test_scl_files/carlos_super.scl",
+#'   package = "consonaR"
+#' ))
+#' if (super$status == "Oll Korrect") {
+#'   print(super$scale_table)
+#' } else {
+#'   print(super$status)
 #' }
 #'
 #' # a file that doesn't exist
@@ -344,7 +340,10 @@ et_scale_table <- function(
 #' }
 #'
 
-sclfile_scale_table <- function(sclfile_path, tonic_note_number = 60) {
+sclfile_scale_table <- function(
+    sclfile_path,
+    root_freq = 440 / (2 ^ (9 / 12))
+) {
 
   # bail if the file can't be opened for reading text
   previous_warn_option <- as.integer(options(warn = 2))
@@ -414,21 +413,20 @@ sclfile_scale_table <- function(sclfile_path, tonic_note_number = 60) {
   }
 
   # finish up
-  ratio_frac <- as.character(fractional::fractional(ratio))
-  tonic_frequency <- 440 * 2 ^ ((tonic_note_number - 69) / 12)
-  frequency <- ratio * tonic_frequency
-  bent_midi <- 0.01 * ratio_cents + tonic_note_number
+  ratio_frac <- cents2frac(ratio_cents)
+  frequency <- ratio * root_freq
   scale_table <- data.table::data.table(
-    ratio,
-    ratio_frac,
+    degree,
     ratio_cents,
-    frequency,
-    bent_midi
+    ratio_frac,
+    frequency
   )
-  data.table::setkey(scale_table, ratio)
+  data.table::setkey(scale_table, ratio_cents)
   scale_table <- scale_table[, `:=`(
-    interval_cents = ratio_cents - data.table::shift(ratio_cents),
-    degree = .I - 1
+    interval_cents = ratio_cents - data.table::shift(ratio_cents)
+  )]
+  scale_table <- scale_table[, `:=`(
+    interval_frac = cents2frac(interval_cents)
   )]
   scale_table$degree[degrees + 1] <- 0
 

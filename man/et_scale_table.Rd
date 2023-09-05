@@ -11,8 +11,7 @@ et_scale_table(period = 2, divisions = 12, root_freq = 440/(2^(9/12)))
 
 \item{divisions}{Number of degrees in the scale - default is 12}
 
-\item{root_freq}{root frequency of the scale - default is middle C
-MIDI note number of the tonic for the scale - default is middle C:
+\item{root_freq}{root frequency of the scale - default is middle C:
 440 / (2 ^ (9 / 12))}
 }
 \value{
