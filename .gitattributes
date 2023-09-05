@@ -1,14 +1,3 @@
-README.* text eol=lf
-DESCRIPTION text eof=lf
-NAMESPACE text eof=lf
-consonaR.Rproj text eol=lf
-.Rbuildignore text eof=lf
-*.xml text eof=lf
-*.yml text eof=lf
-*.Rmd text eof=lf
-*.md text eof=lf
-*.R text eof=lf
-*.Rd text eof=lf
 *.html binary
 *.css binary
 *.json binary

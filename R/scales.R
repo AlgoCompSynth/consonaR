@@ -69,6 +69,22 @@ ratio2cents <- function(ratio) {
   return(log2(ratio) * 1200)
 }
 
+#' @title Cents to Fraction
+#' @name cents2frac
+#' @description Converts a vector of cents to a vector of the corresponding
+#' ratios, expressed as a character vector of vulgar fractions
+#' @importFrom fractional fractional
+#' @export cents2frac
+#' @param cents a numeric vector of cents values
+#' @returns a vector of the corresponding vulgar fractions
+#' @examples
+#'   print(cents2frac(seq(0, 1200, by = 100)))
+#'
+
+cents2frac <- function(cents) {
+  return(as.character(fractional::fractional(2 ^ (cents / 1200))))
+}
+
 #' @title Ratio to Factors
 #' @name ratio2factors
 #' @description Converts a vector of ratios to a vector of the corresponding
@@ -195,33 +211,27 @@ sine_dissonance <- function(freq1, freq2, loud1, loud2) {
 #' @importFrom data.table data.table
 #' @importFrom data.table setkey
 #' @importFrom data.table ":="
-#' @importFrom data.table ".I"
 #' @importFrom data.table "shift"
-#' @importFrom fractional fractional
 #' @importFrom utils globalVariables
 #' @export et_scale_table
 #' @param period The period - default is 2, for an octave
 #' @param divisions Number of degrees in the scale - default is 12
-#' @param tonic_note_number MIDI note number of the tonic for the scale -
-#' - default is middle C = 60
-#' @returns a `data.table` with seven columns:
+#' @param root_freq root frequency of the scale - default is middle C
+#' MIDI note number of the tonic for the scale - default is middle C:
+#' 440 / (2 ^ (9 / 12))
+#' @returns a `data.table` with six columns:
 #' \itemize{
-#' \item `ratio`: the ratio that defines the note, as a number between 1 and
-#' `period`
+#' \item `degree`: scale degree from zero to (number of notes) - 1
+#' \item `ratio_cents`: the ratio in cents (hundredths of a semitone)
 #' \item `ratio_frac`: the ratio as a vulgar fraction (character). The ratios
 #' for this type of scale are usually irrational, so this is an approximation,
 #' computed by `fractional::fractional`.
-#' \item `ratio_cents`: the ratio in cents (hundredths of a semitone)
-#' \item `frequency`: frequency of the note given the `tonic_note_number`
+#' \item `frequency`: frequency of the note given the `root_freq`
 #' parameter
-#' \item `bent_midi`: the MIDI note number as an integer plus a fraction. For
-#' example, middle C is MIDI note number 60 and middle C sharp is 61. The
-#' quarter-tone half-way between C and C sharp would have a `bent_midi` value
-#' of 60.5. The name `bent_midi` comes from the fact that a MIDI sequencer
-#' can convert the value to a regular integer MIDI note number message and
-#' a pitch bend message.
 #' \item `interval_cents`: interval between this note and the previous note
-#' \item `degree`: scale degree from zero to (number of notes) - 1
+#' in cents
+#' \item `interval_frac`: interval between this note and the previous note
+#' as a vulgar fraction
 #' }
 #' @examples
 #'
@@ -242,26 +252,24 @@ sine_dissonance <- function(freq1, freq2, loud1, loud2) {
 et_scale_table <- function(
     period = 2.0,
     divisions = 12,
-    tonic_note_number = 60
+    root_freq = 440 / (2 ^ (9 / 12))
   ) {
   degree <- seq(0, divisions)
   ratio_cents <- degree * ratio2cents(period) / divisions
-  ratio <- cents2ratio(ratio_cents)
-  ratio_frac <- as.character(fractional::fractional(ratio))
-  tonic_frequency <- 440 * 2 ^ ((tonic_note_number - 69) / 12)
-  frequency <- ratio * tonic_frequency
-  bent_midi <- 0.01 * ratio_cents + tonic_note_number
+  ratio_frac <- cents2frac(ratio_cents)
+  frequency <- cents2ratio(ratio_cents) * root_freq
   scale_table <- data.table::data.table(
-    ratio,
-    ratio_frac,
+    degree,
     ratio_cents,
-    frequency,
-    bent_midi
+    ratio_frac,
+    frequency
   )
-  data.table::setkey(scale_table, ratio)
+  data.table::setkey(scale_table, ratio_cents)
   scale_table <- scale_table[, `:=`(
-    interval_cents = ratio_cents - data.table::shift(ratio_cents),
-    degree = .I - 1
+    interval_cents = ratio_cents - data.table::shift(ratio_cents)
+  )]
+  scale_table <- scale_table[, `:=`(
+    interval_frac = cents2frac(interval_cents)
   )]
   scale_table$degree[divisions + 1] <- 0
   return(scale_table)
@@ -510,3 +518,7 @@ prodset_scale_table <- function(
   scale_table$degree[degrees + 1] <- 0
   return(scale_table)
 }
+
+utils::globalVariables(c(
+  "interval_cents"
+))
