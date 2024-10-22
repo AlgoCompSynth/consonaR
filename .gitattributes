@@ -12,3 +12,6 @@ consonaR.Rproj text eol=lf
 *.html binary
 *.css binary
 *.json binary
+*.js binary
+*.js.map binary
+*.woff binary
