@@ -8,7 +8,7 @@ prodset_scale_table(prodset_def, period = 2, tonic_note_number = 60)
 }
 \arguments{
 \item{prodset_def}{the product set scale definition. This is a list of
-numeric vector. Each vector is a multiset of any number of integers.
+numeric vectors. Each vector is a multiset of any number of integers.
 For example, the \code{prodset_def} of the 1-3-5-7 Hexany is
 
 \code{list(c(1, 3), c(1, 5), c(1, 7), c(3, 5), c(3, 7), c(5, 7))}}
