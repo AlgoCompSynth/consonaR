@@ -1,0 +1,55 @@
+# consonaR - Consonance-based composing with Musical Scales and Spectra
+
+## Overview
+
+`consonaR` implements consonance-based algorithms for composing music,
+based on William Sethares’ *Tuning, Timbre, Spectrum, Scale* (Sethares
+2013).
+
+## References
+
+Sethares, W. A. 2013. *Tuning, Timbre, Spectrum, Scale*. Springer
+London.
+
+# Package index
+
+## All functions
+
+- [`MIDI2freq()`](https://algocompsynth.github.io/consonaR/reference/MIDI2freq.md)
+  : MIDI note number to frequency
+
+- [`cents2ratio()`](https://algocompsynth.github.io/consonaR/reference/cents2ratio.md)
+  : Cents to Ratio
+
+- [`et_scale_table()`](https://algocompsynth.github.io/consonaR/reference/et_scale_table.md)
+  : Create Equal-Tempered Scale Table
+
+- [`freq2MIDI()`](https://algocompsynth.github.io/consonaR/reference/freq2MIDI.md)
+  : Frequency to MIDI note number
+
+- [`period_reduce()`](https://algocompsynth.github.io/consonaR/reference/period_reduce.md)
+  : Period Reduce
+
+- [`prodset_scale_table()`](https://algocompsynth.github.io/consonaR/reference/prodset_scale_table.md)
+  : Create Product Set Scale Table
+
+- [`ratio2cents()`](https://algocompsynth.github.io/consonaR/reference/ratio2cents.md)
+  : Ratio to Cents
+
+- [`ratio2factors()`](https://algocompsynth.github.io/consonaR/reference/ratio2factors.md)
+  : Ratio to Factors
+
+- [`sclfile_scale_table()`](https://algocompsynth.github.io/consonaR/reference/sclfile_scale_table.md)
+  :
+
+  Create Scale Table From a Scala `.scl` File
+
+- [`sine_dissonance()`](https://algocompsynth.github.io/consonaR/reference/sine_dissonance.md)
+  : Sine Wave Dissonance
+
+# Articles
+
+### All vignettes
+
+- [About Scale
+  Tables](https://algocompsynth.github.io/consonaR/articles/about-scale-tables.md):
