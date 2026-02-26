@@ -7,7 +7,7 @@ Authors@R:
 Description: `consonaR` implements consonance-based algorithms for composing
              music, based on William Sethares' _Tuning, Timbre, Spectrum,
              Scale_.
-License: GPL (>= 3)
+License: MIT + file LICENSE
 URL: https://algocompsynth.github.io/consonaR/,
     https://github.com/AlgoCompSynth/consonaR
 BugReports: https://github.com/AlgoCompSynth/consonaR/issues

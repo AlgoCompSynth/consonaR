@@ -1,9 +1,12 @@
-^consonaR\.Rproj$
+^.*\.Rproj$
 ^\.Rproj\.user$
-^LICENSE\.md$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-README.Rmd
-^CODE_OF_CONDUCT\.md$
-^CONTRIBUTING\.md$
+^CODE_OF_CONDUCT.md$
+^CONTRIBUTING.md$
+^README.Rmd$
+^README_files$
+^vignettes/articles$
+^data-raw$
+^LICENSE\.md$
