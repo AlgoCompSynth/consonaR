@@ -1,12 +1,10 @@
 # Reading Scala .scl Files
 
 ``` r
-
 library(setharophone)
 ```
 
 ``` r
-
 # parse_scale <- function(v) {
 #   fractional::fractional(vapply(
 #     c(" 1/1", v),

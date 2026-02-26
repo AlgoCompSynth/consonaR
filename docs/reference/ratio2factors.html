@@ -34,7 +34,7 @@ integer factors."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Ratio to Factors</h1>
-      <small class="dont-index">Source: <a href="https://github.com/AlgoCompSynth/consonaR/blob/HEAD/R/consonaR.R" class="external-link"><code>R/consonaR.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/AlgoCompSynth/consonaR/blob/HEAD/R/scales.R" class="external-link"><code>R/scales.R</code></a></small>
       <div class="d-none name"><code>ratio2factors.Rd</code></div>
     </div>
 
@@ -64,13 +64,27 @@ determined the corresponding ratio</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="op">(</span><span class="va">super</span> <span class="op">&lt;-</span> <span class="fu"><a href="sclfile_scale_table.html">sclfile_scale_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">super</span> <span class="op">&lt;-</span> <span class="fu"><a href="sclfile_scale_table.html">sclfile_scale_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"test_scl_files/carlos_super.scl"</span>,</span></span>
 <span class="r-in"><span>  package <span class="op">=</span> <span class="st">"consonaR"</span></span></span>
-<span class="r-in"><span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">scale_table</span><span class="op">$</span><span class="va">ratio</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1.000000 1.062500 1.125000 1.200000 1.250000 1.333333 1.375000 1.500000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 1.625000 1.666667 1.750000 1.875000 2.000000</span>
-<span class="r-in"><span><span class="op">(</span><span class="va">super_factors</span> <span class="op">&lt;-</span> <span class="fu">ratio2factors</span><span class="op">(</span><span class="va">super</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">scale_table</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Key: &lt;ratio_cents&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     degree ratio_cents ratio_frac frequency interval_cents interval_frac</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;num&gt;       &lt;num&gt; &lt;charFrac&gt;     &lt;num&gt;          &lt;num&gt;    &lt;charFrac&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:      0      0.0000          1  261.6256             NA           1/0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:      1    104.9554      17/16  277.9772      104.95541         17/16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:      2    203.9100        9/8  294.3288       98.95459         18/17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:      3    315.6413        6/5  313.9507      111.73129         16/15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:      4    386.3137        5/4  327.0320       70.67243         25/24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:      5    498.0450        4/3  348.8341      111.73129         16/15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:      6    551.3179       11/8  359.7352       53.27294         33/32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:      7    701.9550        3/2  392.4383      150.63706         12/11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:      8    840.5277       13/8  425.1415      138.57266         13/12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:      9    884.3587        5/3  436.0426       43.83105         40/39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:     10    968.8259        7/4  457.8447       84.46719         21/20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:     11   1088.2687       15/8  490.5479      119.44281         15/14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:      0   1200.0000          2  523.2511      111.73129         16/15</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">super_factors</span> <span class="op">&lt;-</span> <span class="fu">ratio2factors</span><span class="op">(</span><span class="fu"><a href="cents2ratio.html">cents2ratio</a></span><span class="op">(</span><span class="va">super</span><span class="op">$</span><span class="va">ratio_cents</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`240`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2 2 2 2 3 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -111,13 +125,27 @@ determined the corresponding ratio</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2 2 2 2 2 3 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="op">(</span><span class="va">harm</span> <span class="op">&lt;-</span> <span class="fu"><a href="sclfile_scale_table.html">sclfile_scale_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">harm</span> <span class="op">&lt;-</span> <span class="fu"><a href="sclfile_scale_table.html">sclfile_scale_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"test_scl_files/carlos_harm.scl"</span>,</span></span>
 <span class="r-in"><span>  package <span class="op">=</span> <span class="st">"consonaR"</span></span></span>
-<span class="r-in"><span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">scale_table</span><span class="op">$</span><span class="va">ratio</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1.0000 1.0625 1.1250 1.1875 1.2500 1.3125 1.3750 1.5000 1.6250 1.6875</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] 1.7500 1.8750 2.0000</span>
-<span class="r-in"><span><span class="op">(</span><span class="va">harm_factors</span> <span class="op">&lt;-</span> <span class="fu">ratio2factors</span><span class="op">(</span><span class="va">harm</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">scale_table</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Key: &lt;ratio_cents&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     degree ratio_cents ratio_frac frequency interval_cents interval_frac</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;num&gt;       &lt;num&gt; &lt;charFrac&gt;     &lt;num&gt;          &lt;num&gt;    &lt;charFrac&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:      0      0.0000          1  261.6256             NA           1/0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:      1    104.9554      17/16  277.9772      104.95541         17/16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:      2    203.9100        9/8  294.3288       98.95459         18/17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:      3    297.5130      19/16  310.6804       93.60301         19/18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:      4    386.3137        5/4  327.0320       88.80070         20/19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:      5    470.7809      21/16  343.3836       84.46719         21/20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:      6    551.3179       11/8  359.7352       80.53704         22/21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:      7    701.9550        3/2  392.4383      150.63706         12/11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:      8    840.5277       13/8  425.1415      138.57266         13/12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:      9    905.8650      27/16  441.4931       65.33734         27/26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:     10    968.8259        7/4  457.8447       62.96090         28/27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:     11   1088.2687       15/8  490.5479      119.44281         15/14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13:      0   1200.0000          2  523.2511      111.73129         16/15</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">harm_factors</span> <span class="op">&lt;-</span> <span class="fu">ratio2factors</span><span class="op">(</span><span class="fu"><a href="cents2ratio.html">cents2ratio</a></span><span class="op">(</span><span class="va">harm</span><span class="op">$</span><span class="va">ratio_cents</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`16`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2 2 2 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

@@ -23,13 +23,27 @@ the corresponding ratio
 ## Examples
 
 ``` r
-(super <- sclfile_scale_table(system.file(
+print(super <- sclfile_scale_table(system.file(
   "test_scl_files/carlos_super.scl",
   package = "consonaR"
-))$scale_table$ratio)
-#>  [1] 1.000000 1.062500 1.125000 1.200000 1.250000 1.333333 1.375000 1.500000
-#>  [9] 1.625000 1.666667 1.750000 1.875000 2.000000
-(super_factors <- ratio2factors(super))
+))$scale_table)
+#> Key: <ratio_cents>
+#>     degree ratio_cents ratio_frac frequency interval_cents interval_frac
+#>      <num>       <num> <charFrac>     <num>          <num>    <charFrac>
+#>  1:      0      0.0000          1  261.6256             NA           1/0
+#>  2:      1    104.9554      17/16  277.9772      104.95541         17/16
+#>  3:      2    203.9100        9/8  294.3288       98.95459         18/17
+#>  4:      3    315.6413        6/5  313.9507      111.73129         16/15
+#>  5:      4    386.3137        5/4  327.0320       70.67243         25/24
+#>  6:      5    498.0450        4/3  348.8341      111.73129         16/15
+#>  7:      6    551.3179       11/8  359.7352       53.27294         33/32
+#>  8:      7    701.9550        3/2  392.4383      150.63706         12/11
+#>  9:      8    840.5277       13/8  425.1415      138.57266         13/12
+#> 10:      9    884.3587        5/3  436.0426       43.83105         40/39
+#> 11:     10    968.8259        7/4  457.8447       84.46719         21/20
+#> 12:     11   1088.2687       15/8  490.5479      119.44281         15/14
+#> 13:      0   1200.0000          2  523.2511      111.73129         16/15
+print(super_factors <- ratio2factors(cents2ratio(super$ratio_cents)))
 #> $`240`
 #> [1] 2 2 2 2 3 5
 #> 
@@ -70,13 +84,27 @@ the corresponding ratio
 #> [1] 2 2 2 2 2 3 5
 #> 
 
-(harm <- sclfile_scale_table(system.file(
+print(harm <- sclfile_scale_table(system.file(
   "test_scl_files/carlos_harm.scl",
   package = "consonaR"
-))$scale_table$ratio)
-#>  [1] 1.0000 1.0625 1.1250 1.1875 1.2500 1.3125 1.3750 1.5000 1.6250 1.6875
-#> [11] 1.7500 1.8750 2.0000
-(harm_factors <- ratio2factors(harm))
+))$scale_table)
+#> Key: <ratio_cents>
+#>     degree ratio_cents ratio_frac frequency interval_cents interval_frac
+#>      <num>       <num> <charFrac>     <num>          <num>    <charFrac>
+#>  1:      0      0.0000          1  261.6256             NA           1/0
+#>  2:      1    104.9554      17/16  277.9772      104.95541         17/16
+#>  3:      2    203.9100        9/8  294.3288       98.95459         18/17
+#>  4:      3    297.5130      19/16  310.6804       93.60301         19/18
+#>  5:      4    386.3137        5/4  327.0320       88.80070         20/19
+#>  6:      5    470.7809      21/16  343.3836       84.46719         21/20
+#>  7:      6    551.3179       11/8  359.7352       80.53704         22/21
+#>  8:      7    701.9550        3/2  392.4383      150.63706         12/11
+#>  9:      8    840.5277       13/8  425.1415      138.57266         13/12
+#> 10:      9    905.8650      27/16  441.4931       65.33734         27/26
+#> 11:     10    968.8259        7/4  457.8447       62.96090         28/27
+#> 12:     11   1088.2687       15/8  490.5479      119.44281         15/14
+#> 13:      0   1200.0000          2  523.2511      111.73129         16/15
+print(harm_factors <- ratio2factors(cents2ratio(harm$ratio_cents)))
 #> $`16`
 #> [1] 2 2 2 2
 #> 

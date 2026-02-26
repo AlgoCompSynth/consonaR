@@ -5,6 +5,9 @@
 - [`MIDI2freq()`](https://algocompsynth.github.io/consonaR/reference/MIDI2freq.md)
   : MIDI note number to frequency
 
+- [`cents2frac()`](https://algocompsynth.github.io/consonaR/reference/cents2frac.md)
+  : Cents to Fraction
+
 - [`cents2ratio()`](https://algocompsynth.github.io/consonaR/reference/cents2ratio.md)
   : Cents to Ratio
 

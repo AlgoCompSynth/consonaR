@@ -24,7 +24,6 @@ a numeric vector of the corresponding frequencies
 ## Examples
 
 ``` r
-
   # quarter-tone scale
   MIDI <- seq(60, 72, by = 0.5)
   print(MIDI2freq(MIDI))
