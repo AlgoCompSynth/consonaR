@@ -1,5 +1,5 @@
 ---
-title: "consonaR - Consonance-based composing with Musical Scales and Spectra"
+title: "consonaR: Consonance-based Algorithmic Composition"
 output: github_document
 bibliography: "inst/REFERENCES.bib"
 ---
