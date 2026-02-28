@@ -1,5 +1,6 @@
 ---
 title: "consonaR: Consonance-based Algorithmic Composition"
+author: M. Edward (Ed) Borasky
 output: github_document
 bibliography: "inst/REFERENCES.bib"
 ---
@@ -12,5 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 `consonaR` implements consonance-based algorithms for composing music, based
 on William Sethares' _Tuning, Timbre, Spectrum, Scale_ [@sethares2013tuning].
+`consonaR` is part of the `xen.assist` project for algorithmic xentonal
+composition.
 
 ## References
