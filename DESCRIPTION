@@ -22,9 +22,9 @@ Imports:
 RdMacros: Rdpack
 Suggests: 
     devtools (>= 2.4.5),
-    knitr (>= 1.42),
+    knitr,
     pkgdown (>= 2.0.7),
-    rmarkdown (>= 2.21)
+    rmarkdown
 Depends:
     R (>= 4.2.0)
 VignetteBuilder: knitr

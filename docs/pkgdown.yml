@@ -3,7 +3,8 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   about-scale-tables: about-scale-tables.html
-last_built: 2026-02-28T04:28Z
+  sethares-summary: sethares-summary.html
+last_built: 2026-03-01T05:51Z
 urls:
   reference: https://algocompsynth.github.io/consonaR/reference
   article: https://algocompsynth.github.io/consonaR/articles
