@@ -1,5 +1,5 @@
 Package: consonaR
-Title: Consonance-based Algorithmic Composition with Musical Scales and Spectra
+Title: Consonance-based Algorithmic Composition
 Version: 0.0.0.9000
 Authors@R: 
     person("M. Edward (Ed)", "Borasky", , "znmeb@algocompsynth.com",

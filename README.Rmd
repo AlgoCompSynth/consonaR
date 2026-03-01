@@ -11,8 +11,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Overview
 
-`consonaR` implements consonance-based algorithms for algorithmic composition,
-based on William Sethares' _Tuning, Timbre, Spectrum, Scale_
-[@sethares2013tuning]. `consonaR` is part of the `xen.assist` project for xentonal algorithmic composition.
+`consonaR` implements consonance-based algorithms for composing music, based
+on William Sethares' _Tuning, Timbre, Spectrum, Scale_ [@sethares2013tuning].
+`consonaR` is part of the `xen.assist` project for algorithmic xentonal
+composition.
 
 ## References
