@@ -1,12 +1,12 @@
 Package: consonaR
-Title: Consonance-based Algorithmic Composition
+Title: Consonance-based Algorithmic Composition with Musical Scales and Spectra
 Version: 0.0.0.9000
 Authors@R: 
     person("M. Edward (Ed)", "Borasky", , "znmeb@algocompsynth.com",
            role = c("aut", "cre"))
-Description: `consonaR` implements consonance-based algorithms for composing
-             music, based on William Sethares' _Tuning, Timbre, Spectrum,
-             Scale_.
+Description: `consonaR` implements consonance-based algorithms for algorithmic
+             composition of music, based on William Sethares' _Tuning, Timbre,
+             Spectrum, Scale_.
 License: MIT + file LICENSE
 URL: https://algocompsynth.github.io/consonaR/,
     https://github.com/AlgoCompSynth/consonaR
