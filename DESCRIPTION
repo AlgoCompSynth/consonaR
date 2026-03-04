@@ -1,6 +1,6 @@
 Package: consonaR
 Title: Consonance-based Algorithmic Composition
-Version: 0.0.0.9000
+Version: 0.2.0
 Authors@R: 
     person("M. Edward (Ed)", "Borasky", , "znmeb@algocompsynth.com",
            role = c("aut", "cre"))
