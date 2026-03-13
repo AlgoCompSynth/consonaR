@@ -10,13 +10,12 @@ Source:
 [`DESCRIPTION`](https://github.com/AlgoCompSynth/consonaR/blob/HEAD/DESCRIPTION)
 
 Borasky M (2026). *consonaR: Consonance-based Algorithmic Composition*.
-R package version 0.0.0.9000,
-<https://algocompsynth.github.io/consonaR/>.
+R package version 0.2.0, <https://algocompsynth.github.io/consonaR/>.
 
     @Manual{,
       title = {consonaR: Consonance-based Algorithmic Composition},
       author = {M. Edward (Ed) Borasky},
       year = {2026},
-      note = {R package version 0.0.0.9000},
+      note = {R package version 0.2.0},
       url = {https://algocompsynth.github.io/consonaR/},
     }
