@@ -99,7 +99,7 @@
 <li>
 <p>Example:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#' @importFrom data.table data.table setkey shift ":=" ".I"</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#' @importFrom data.table data.table setkey shift "=:=: .I"</span></span></code></pre></div>
 </li>
 </ul></div>
 <div class="section level3">
@@ -148,7 +148,7 @@
 <div class="section level3">
 <h3 id="data-processing-with-datatable">Data Processing with data.table<a class="anchor" aria-label="anchor" href="#data-processing-with-datatable"></a></h3>
 <ul><li><p>Create tables with named columns immediately</p></li>
-<li><p>Use backticks for special operators: <code>`:=`()</code>, <code>".I"</code>, <code>"shift"</code></p></li>
+<li><p>Use backticks for special operators: <code>`:=`()</code>, <code>"=.I"</code>, <code>"shift"</code></p></li>
 <li><p>Set keys after table creation: <code>data.table::setkey(table, column)</code></p></li>
 <li>
 <p>Append computed columns using shift operations and <code>:=</code>:</p>
@@ -158,9 +158,9 @@
 </ul></div>
 <div class="section level3">
 <h3 id="vectorized-operations">Vectorized Operations<a class="anchor" aria-label="anchor" href="#vectorized-operations"></a></h3>
-<ul><li>Use <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply()</a></code> over <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> when return type is known (numeric vectors)</li>
-<li>Prefer <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply()</a></code>, <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code> for simple vectorization</li>
-<li>Use <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> for complex list-processing tasks</li>
+<ul><li>Use <a href="https://rdrr.io/r/base/lapply.html" class="external-link"><code>vapply()</code></a> over <a href="https://rdrr.io/r/base/lapply.html" class="external-link"><code>lapply()</code></a> when return type is known (numeric vectors)</li>
+<li>Prefer <a href="https://rdrr.io/r/base/lapply.html" class="external-link"><code>sapply()</code></a>, <a href="https://rdrr.io/r/base/mapply.html" class="external-link"><code>mapply()</code></a> for simple vectorization</li>
+<li>Use <a href="https://rdrr.io/r/base/lapply.html" class="external-link"><code>lapply()</code></a> for complex list-processing tasks</li>
 </ul></div>
 <div class="section level3">
 <h3 id="mathematical-conventions">Mathematical Conventions<a class="anchor" aria-label="anchor" href="#mathematical-conventions"></a></h3>
@@ -190,10 +190,10 @@
 <h3 id="example-documentation">Example Documentation<a class="anchor" aria-label="anchor" href="#example-documentation"></a></h3>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' @examples</span></span>
-<span><span class="co">#' </span></span>
+<span><span class="co">#'</span></span>
 <span><span class="co">#' # Standard example</span></span>
 <span><span class="co">#' print(result &lt;- et_scale_table())</span></span>
-<span><span class="co">#' </span></span>
+<span><span class="co">#'</span></span>
 <span><span class="co">#' # With conditional output based on status</span></span>
 <span><span class="co">#' result &lt;- sclfile_scale_table(system.file(</span></span>
 <span><span class="co">#'   "test_scl_files/example.scl",</span></span>
@@ -220,6 +220,81 @@ inst/
 <div class="section level2">
 <h2 id="vignettes">Vignettes<a class="anchor" aria-label="anchor" href="#vignettes"></a></h2>
 <p>All vignettes use knitr with markdown: - Set <code>knitr::opts_chunk$set(echo = TRUE)</code> in setup - Include <code>bibliography</code> for citations from inst/REFERENCES.bib - Use parameterized code chunks consistent with source</p>
+</div>
+<div class="section level2">
+<h2 id="repository-management">Repository Management<a class="anchor" aria-label="anchor" href="#repository-management"></a></h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Git commands</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"&lt;descriptive message&gt;"</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code></pre></div>
+<div class="section level3">
+<h3 id="git-commit-messages">Git commit messages<a class="anchor" aria-label="anchor" href="#git-commit-messages"></a></h3>
+<p>Follow these conventions: - Start with a verb (e.g., “Fix”, “Add”, “Update”, “Remove”) - Use present tense (“Fix bug” not “Fixed bug”) - Capitalize the first letter - Keep under 50 characters - Reference issue numbers if applicable</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="for-agentic-coding-agents">For Agentic Coding Agents<a class="anchor" aria-label="anchor" href="#for-agentic-coding-agents"></a></h2>
+<p>This file serves as documentation for AI agents working in this repository. Before making changes, review this document to ensure compliance with package standards and conventions.</p>
+<div class="section level3">
+<h3 id="key-directories-and-files">Key Directories and Files<a class="anchor" aria-label="anchor" href="#key-directories-and-files"></a></h3>
+<ul><li>
+<code>R/scales.R</code>: Main source file containing all package functions</li>
+<li>
+<code>inst/test_scl_files/</code>: Directory for test Scala files</li>
+<li>
+<code>DESCRIPTION</code>: Package metadata</li>
+<li>
+<code>docs/AGENTS.md</code>: This file</li>
+</ul></div>
+<div class="section level3">
+<h3 id="development-workflow">Development Workflow<a class="anchor" aria-label="anchor" href="#development-workflow"></a></h3>
+<ol style="list-style-type: decimal"><li>Read and understand the AGENTS.md guidelines</li>
+<li>Use <code>styler::style_pkg()</code> for code formatting</li>
+<li>Use <code>lintr::lint_package()</code> for linting</li>
+<li>Test with <code>R CMD check</code> and <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code>
+</li>
+<li>Follow documenting conventions with complete Roxygen2 comments</li>
+</ol></div>
+<div class="section level3">
+<h3 id="error-status-convention">Error Status Convention<a class="anchor" aria-label="anchor" href="#error-status-convention"></a></h3>
+<p>The package uses a consistent error handling pattern where functions return a named list with a <code>status</code> field: - <code>"Oll Korrect"</code> for success - Character string describing the error for failures</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">status</span> <span class="op">!=</span> <span class="st">"Oll Korrect"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">status</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>This convention helps AI agents handle errors consistently across the codebase.</p>
+</div>
+<div class="section level3">
+<h3 id="testing-strategy">Testing Strategy<a class="anchor" aria-label="anchor" href="#testing-strategy"></a></h3>
+<p>When adding tests:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">devtools::use_testthat()</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="ex">testthat::test_file</span><span class="er">(</span><span class="st">"tests/testthat/test-scales.R"</span><span class="kw">)</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="ex">testthat::test_local</span><span class="er">(</span><span class="ex">filter</span> = <span class="st">"test_name"</span><span class="kw">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="style-rules-for-ai-agents">Style Rules (for AI agents)<a class="anchor" aria-label="anchor" href="#style-rules-for-ai-agents"></a></h2>
+<div class="section level3">
+<h3 id="dos">Do’s<a class="anchor" aria-label="anchor" href="#dos"></a></h3>
+<ul><li>Use <code>return(expression)</code> syntax consistently</li>
+<li>Use explicit decimal points in math (e.g., <code>2.0</code>)</li>
+<li>Document all exported functions with Roxygen2</li>
+<li>Use snake_case for function and variable names</li>
+<li>Check for errors in file operations using <code><a href="https://rdrr.io/r/base/try.html" class="external-link">try()</a></code>
+</li>
+<li>Return named lists with <code>status</code> field for error handling</li>
+<li>Use <code>\insertCite{}{consonaR}</code> for citations</li>
+</ul></div>
+<div class="section level3">
+<h3 id="donts">Don’ts<a class="anchor" aria-label="anchor" href="#donts"></a></h3>
+<ul><li>Don’t use implicit returns</li>
+<li>Don’t mix tabs and spaces</li>
+<li>Don’t create functions without complete Roxygen2 documentation</li>
+<li>Don’t use absolute file paths</li>
+<li>Don’t leave file connections open</li>
+<li>Don’t create unversioned files in the repository</li>
+</ul></div>
 </div>
 </div>
 

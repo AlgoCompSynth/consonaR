@@ -3,14 +3,14 @@
 ## Package Overview
 
 consonaR is an R package implementing consonance-based algorithms for
-algorithmic composition, based on William Sethares’ *Tuning, Timbre,
+algorithmic composition, based on William Sethares' *Tuning, Timbre,
 Spectrum, Scale*. It provides functions for musical scale calculations
 including frequency/MIDI conversion, cents/ratio math, and Scala `.scl`
 file parsing.
 
 ## Build Commands
 
-``` bash
+```bash
 # Install dependencies and load package in development mode
 devtools::load_all()
 
@@ -36,7 +36,7 @@ R CMD INSTALL .
 
 ## Linting and Style
 
-``` bash
+```bash
 # Run styler for automatic code formatting
 styler::style_pkg()
 
@@ -49,7 +49,7 @@ lintr::lint_package()
 No tests currently exist. When adding tests, use the `testthat`
 framework:
 
-``` bash
+```bash
 # Create test file structure
 devtools::use_testthat()
 
@@ -78,21 +78,24 @@ testthat::test_local(filter = "test_name")
 
 - Example:
 
-  ``` r
+  ```r
   #' @importFrom data.table data.table setkey shift "=:=: .I"
   ```
 
 ### Function Documentation (Roxygen2)
 
-All exported functions require complete Roxygen2 documentation with: -
-`@title` - Brief function name/description - `@name` - Function name -
-`@description` - Detailed description in markdown - `@param` - Each
-parameter with type and description - `@returns` - Return value type and
-meaning - `@examples` - At least one runnable example (must work without
-modification) - `@export` - For all exported functions - Use
-`\itemize{}` for lists in documentation - Use
-`\insertCite{key}{consonaR}` with Rdpack for citations from
-inst/REFERENCES.bib
+All exported functions require complete Roxygen2 documentation with:
+- `@title` - Brief function name/description
+- `@name` - Function name
+- `@description` - Detailed description in markdown
+- `@param` - Each parameter with type and description
+- `@returns` - Return value type and meaning
+- `@examples` - At least one runnable example (must work without
+  modification)
+- `@export` - For all exported functions
+- Use `\itemize{}` for lists in documentation
+- Use `\insertCite{key}{consonaR}` with Rdpack for citations from
+  inst/REFERENCES.bib
 
 ### Type Safety and Parameter Handling
 
@@ -107,7 +110,7 @@ inst/REFERENCES.bib
 
 - Check for try-error results from file operations:
 
-  ``` r
+  ```r
   result <- try(file(path, open = "rt"), silent = TRUE)
   if (inherits(result, "try-error")) {
     return(list(status = paste0("error message")))
@@ -147,7 +150,7 @@ inst/REFERENCES.bib
 
 - Append computed columns using shift operations and `:=`:
 
-  ``` r
+  ```r
   result <- result[, `:=`(new_col = col - data.table::shift(col))]
   ```
 
@@ -188,7 +191,7 @@ inst/REFERENCES.bib
 
 ### Example Documentation
 
-``` r
+```r
 #' @examples
 #'
 #' # Standard example
@@ -208,25 +211,27 @@ inst/REFERENCES.bib
 
 ## Package Structure
 
-    R/
-      scales.R          # Main source file - all exported functions
-    man/               # Generated .Rd documentation files
-    vignettes/         # Rmarkdown vignettes
-    docs/              # pkgdown-generated website output
-    inst/
-      REFERENCES.bib   # Citation database for Rdpack
-      test_scl_files/  # Sample Scala scale files for examples
+```
+R/
+  scales.R          # Main source file - all exported functions
+man/               # Generated .Rd documentation files
+vignettes/         # Rmarkdown vignettes
+docs/              # pkgdown-generated website output
+inst/
+  REFERENCES.bib   # Citation database for Rdpack
+  test_scl_files/  # Sample Scala scale files for examples
+```
 
 ## Vignettes
 
-All vignettes use knitr with markdown: - Set
-`knitr::opts_chunk$set(echo = TRUE)` in setup - Include `bibliography`
-for citations from inst/REFERENCES.bib - Use parameterized code chunks
-consistent with source
+All vignettes use knitr with markdown:
+- Set `knitr::opts_chunk$set(echo = TRUE)` in setup
+- Include `bibliography` for citations from inst/REFERENCES.bib
+- Use parameterized code chunks consistent with source
 
 ## Repository Management
 
-``` bash
+```bash
 # Git commands
 git add .
 git commit -m "<descriptive message>"
@@ -235,16 +240,18 @@ git push origin main
 
 ### Git commit messages
 
-Follow these conventions: - Start with a verb (e.g., “Fix”, “Add”,
-“Update”, “Remove”) - Use present tense (“Fix bug” not “Fixed bug”) -
-Capitalize the first letter - Keep under 50 characters - Reference issue
-numbers if applicable
+Follow these conventions:
+- Start with a verb (e.g., "Fix", "Add", "Update", "Remove")
+- Use present tense ("Fix bug" not "Fixed bug")
+- Capitalize the first letter
+- Keep under 50 characters
+- Reference issue numbers if applicable
 
 ## For Agentic Coding Agents
 
-This file serves as documentation for AI agents working in this
-repository. Before making changes, review this document to ensure
-compliance with package standards and conventions.
+This file serves as documentation for AI agents working in this repository.
+Before making changes, review this document to ensure compliance with package
+standards and conventions.
 
 ### Key Directories and Files
 
@@ -255,35 +262,34 @@ compliance with package standards and conventions.
 
 ### Development Workflow
 
-1.  Read and understand the AGENTS.md guidelines
-2.  Use `styler::style_pkg()` for code formatting
-3.  Use `lintr::lint_package()` for linting
-4.  Test with `R CMD check` and
-    [`devtools::check()`](https://devtools.r-lib.org/reference/check.html)
-5.  Follow documenting conventions with complete Roxygen2 comments
+1. Read and understand the AGENTS.md guidelines
+2. Use `styler::style_pkg()` for code formatting
+3. Use `lintr::lint_package()` for linting
+4. Test with `R CMD check` and `devtools::check()`
+5. Follow documenting conventions with complete Roxygen2 comments
 
 ### Error Status Convention
 
-The package uses a consistent error handling pattern where functions
-return a named list with a `status` field: - `"Oll Korrect"` for
-success - Character string describing the error for failures
+The package uses a consistent error handling pattern where functions return
+a named list with a `status` field:
+- `"Oll Korrect"` for success
+- Character string describing the error for failures
 
 Example:
 
-``` r
+```r
 if (result$status != "Oll Korrect") {
   stop(result$status)
 }
 ```
 
-This convention helps AI agents handle errors consistently across the
-codebase.
+This convention helps AI agents handle errors consistently across the codebase.
 
 ### Testing Strategy
 
 When adding tests:
 
-``` bash
+```bash
 devtools::use_testthat()
 testthat::test_file("tests/testthat/test-scales.R")
 testthat::test_local(filter = "test_name")
@@ -291,22 +297,21 @@ testthat::test_local(filter = "test_name")
 
 ## Style Rules (for AI agents)
 
-### Do’s
+### Do's
 
 - Use `return(expression)` syntax consistently
 - Use explicit decimal points in math (e.g., `2.0`)
 - Document all exported functions with Roxygen2
 - Use snake_case for function and variable names
-- Check for errors in file operations using
-  [`try()`](https://rdrr.io/r/base/try.html)
+- Check for errors in file operations using `try()`
 - Return named lists with `status` field for error handling
 - Use `\insertCite{}{consonaR}` for citations
 
-### Don’ts
+### Don'ts
 
-- Don’t use implicit returns
-- Don’t mix tabs and spaces
-- Don’t create functions without complete Roxygen2 documentation
-- Don’t use absolute file paths
-- Don’t leave file connections open
-- Don’t create unversioned files in the repository
+- Don't use implicit returns
+- Don't mix tabs and spaces
+- Don't create functions without complete Roxygen2 documentation
+- Don't use absolute file paths
+- Don't leave file connections open
+- Don't create unversioned files in the repository
