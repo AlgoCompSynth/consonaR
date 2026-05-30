@@ -18,17 +18,6 @@ Converts a vector of ratios to a vector of the corresponding
 integer factors.
 }
 \examples{
-print(super <- sclfile_scale_table(system.file(
-  "test_scl_files/carlos_super.scl",
-  package = "consonaR"
-))$scale_table)
-print(super_factors <- ratio2factors(cents2ratio(super$ratio_cents)))
-
-print(harm <- sclfile_scale_table(system.file(
-  "test_scl_files/carlos_harm.scl",
-  package = "consonaR"
-))$scale_table)
-print(harm_factors <- ratio2factors(cents2ratio(harm$ratio_cents)))
 
 # we know the factors that yield the 1-3-5-7 Hexany
 # can we recover them?
