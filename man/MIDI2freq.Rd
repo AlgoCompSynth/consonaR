@@ -4,10 +4,10 @@
 \alias{MIDI2freq}
 \title{MIDI note number to frequency}
 \usage{
-MIDI2freq(MIDI)
+MIDI2freq(midi)
 }
 \arguments{
-\item{MIDI}{a numeric vector of MIDI note numbers}
+\item{midi}{a numeric vector of MIDI note numbers}
 }
 \value{
 a numeric vector of the corresponding frequencies
@@ -21,7 +21,7 @@ quarter-tone between middle C (60) and middle C# (61).
 \examples{
 
   # quarter-tone scale
-  MIDI <- seq(60, 72, by = 0.5)
-  print(MIDI2freq(MIDI))
+  midi <- seq(60, 72, by = 0.5)
+  print(MIDI2freq(midi))
 
 }

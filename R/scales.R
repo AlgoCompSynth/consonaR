@@ -15,7 +15,8 @@
 #'
 
 freq2MIDI <- function(freq) {
-  return(69 + log2(freq / 440) * 12)
+  stopifnot(is.numeric(freq), all(freq > 0))
+  69 + log2(freq / 440) * 12
 }
 
 #' @title MIDI note number to frequency
@@ -25,17 +26,18 @@ freq2MIDI <- function(freq) {
 #' ***floating point***values - for example, MIDI note number 60.5 is the
 #' quarter-tone between middle C (60) and middle C# (61).
 #' @export MIDI2freq
-#' @param MIDI a numeric vector of MIDI note numbers
+#' @param midi a numeric vector of MIDI note numbers
 #' @returns a numeric vector of the corresponding frequencies
 #' @examples
 #'
 #'   # quarter-tone scale
-#'   MIDI <- seq(60, 72, by = 0.5)
-#'   print(MIDI2freq(MIDI))
+#'   midi <- seq(60, 72, by = 0.5)
+#'   print(MIDI2freq(midi))
 #'
 
-MIDI2freq <- function(MIDI) {
-  return(2 ^ ((MIDI - 69) / 12) * 440)
+MIDI2freq <- function(midi) {
+  stopifnot(is.numeric(midi))
+  2 ^ ((midi - 69) / 12) * 440
 }
 
 #' @title Cents to Ratio
@@ -50,7 +52,8 @@ MIDI2freq <- function(MIDI) {
 #'
 
 cents2ratio <- function(cents) {
-  return(2 ^ (cents / 1200))
+  stopifnot(is.numeric(cents))
+  2 ^ (cents / 1200)
 }
 
 #' @title Ratio to Cents
@@ -66,7 +69,8 @@ cents2ratio <- function(cents) {
 #'
 
 ratio2cents <- function(ratio) {
-  return(log2(ratio) * 1200)
+  stopifnot(is.numeric(ratio), all(ratio > 0))
+  log2(ratio) * 1200
 }
 
 #' @title Cents to Fraction
@@ -82,7 +86,8 @@ ratio2cents <- function(ratio) {
 #'
 
 cents2frac <- function(cents) {
-  return(as.character(fractional::fractional(2 ^ (cents / 1200))))
+  stopifnot(is.numeric(cents))
+  as.character(fractional::fractional(2 ^ (cents / 1200)))
 }
 
 #' @title Ratio to Factors
@@ -111,13 +116,14 @@ cents2frac <- function(cents) {
 #'
 
 ratio2factors <- function(ratio) {
+  stopifnot(is.numeric(ratio), all(ratio > 0))
 
   # get rid of the denominators
   lcm_denoms <- numbers::mLCM(fractional::denominators(ratio))
   integers <- as.list(lcm_denoms * ratio)
   names(integers) <- as.character(integers)
   prime_factors <- lapply(integers, FUN = numbers::primeFactors)
-  return(prime_factors)
+  prime_factors
 }
 
 #' @title Period Reduce
@@ -133,21 +139,11 @@ ratio2factors <- function(ratio) {
 #'
 
 period_reduce <- function(scale, period = 2.0) {
-  w <- as.numeric(scale)
-
-  ix <- (w >= period)
-  while (any(ix)) {
-    w[ix] <- w[ix] / period
-    ix <- (w >= period)
-  }
-
-  ix <- (w < 1)
-  while (any(ix)) {
-    w[ix] <- w[ix] * period
-    ix <- (w < 1)
-  }
-
-  return(w)
+  stopifnot(is.numeric(scale), all(scale > 0), is.numeric(period), period > 1)
+  
+  # Use log-domain modulo to reduce ratios to the range [1, period)
+  k <- log(scale) / log(period)
+  period ^ (k %% 1)
 }
 
 #' @title Sine Wave Dissonance
@@ -166,18 +162,17 @@ period_reduce <- function(scale, period = 2.0) {
 #' \insertAllCited{}
 
 sine_dissonance <- function(freq1, freq2, loud1, loud2) {
-  if (freq1 < freq2) {
-    f1 <- freq1
-    f2 <- freq2
-    l1 <- loud1
-    l2 <- loud2
-  } else {
-    f2 <- freq1
-    f1 <- freq2
-    l2 <- loud1
-    l1 <- loud2
-  }
-  l12 <- min(l1, l2)
+  stopifnot(is.numeric(freq1), is.numeric(freq2), 
+            all(freq1 > 0), all(freq2 > 0))
+
+  f1 <- pmin(freq1, freq2)
+  f2 <- pmax(freq1, freq2)
+  
+  idx <- freq1 < freq2
+  l1 <- ifelse(idx, loud1, loud2)
+  l2 <- ifelse(idx, loud2, loud1)
+  
+  l12 <- pmin(l1, l2)
 
   # constants
   B1 <- -3.5
@@ -189,8 +184,7 @@ sine_dissonance <- function(freq1, freq2, loud1, loud2) {
   # scale factor
   s <- (X_STAR * (f2 - f1)) / (S1 * f1 + S2)
 
-  dissonance <- l12 * (exp(B1 * s) - exp(B2 * s))
-  return(dissonance)
+  l12 * (exp(B1 * s) - exp(B2 * s))
 }
 
 #' @title Create Equal-Tempered Scale Table
@@ -242,6 +236,8 @@ et_scale_table <- function(
     divisions = 12,
     root_freq = 440 / (2 ^ (9 / 12))
   ) {
+  stopifnot(is.numeric(period), period > 0, is.numeric(divisions), divisions != 0)
+  
   degree <- seq(0, divisions)
   ratio_cents <- degree * ratio2cents(period) / divisions
   ratio_frac <- cents2frac(ratio_cents)
@@ -260,7 +256,7 @@ et_scale_table <- function(
     interval_frac = cents2frac(interval_cents)
   )]
   scale_table$degree[divisions + 1] <- 0
-  return(scale_table)
+  scale_table
 }
 
 #' @title Create Product Set Scale Table
@@ -316,6 +312,8 @@ prodset_scale_table <- function(
   period = 2,
   tonic_note_number = 60
 ) {
+  stopifnot(is.list(prodset_def), is.numeric(period), period > 0)
+  
   degrees <- length(prodset_def)
   products <- unlist(lapply(prodset_def, FUN = prod))
   normalizer <- min(products)
@@ -340,7 +338,7 @@ prodset_scale_table <- function(
     degree = .I - 1
   )]
   scale_table$degree[degrees + 1] <- 0
-  return(scale_table)
+  scale_table
 }
 
 utils::globalVariables(c(
