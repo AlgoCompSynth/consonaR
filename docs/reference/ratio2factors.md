@@ -23,6 +23,7 @@ the corresponding ratio
 ## Examples
 
 ``` r
+
 # we know the factors that yield the 1-3-5-7 Hexany
 # can we recover them?
 (hexany <- prodset_scale_table(list(
@@ -35,6 +36,7 @@ the corresponding ratio
 ))$ratio)
 #> [1] 1.000000 1.166667 1.250000 1.458333 1.666667 1.750000 2.000000
 (hexany_factors <- ratio2factors(hexany))
+#> Warning: Argument 'n' must be a nonnegative integer.
 #> $`24`
 #> [1] 2 2 2 3
 #> 
@@ -42,7 +44,7 @@ the corresponding ratio
 #> [1] 2 2 7
 #> 
 #> $`30`
-#> [1] 2 3 5
+#> NULL
 #> 
 #> $`35`
 #> [1] 5 7

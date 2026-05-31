@@ -13,7 +13,7 @@ quarter-tone between middle C (60) and middle C# (61)."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">consonaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,14 +52,14 @@ quarter-tone between middle C (60) and middle C# (61).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">MIDI2freq</span><span class="op">(</span><span class="va">MIDI</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">MIDI2freq</span><span class="op">(</span><span class="va">midi</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-midi">MIDI<a class="anchor" aria-label="anchor" href="#arg-midi"></a></dt>
+<dl><dt id="arg-midi">midi<a class="anchor" aria-label="anchor" href="#arg-midi"></a></dt>
 <dd><p>a numeric vector of MIDI note numbers</p></dd>
 
 </dl></div>
@@ -72,8 +72,8 @@ quarter-tone between middle C (60) and middle C# (61).</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># quarter-tone scale</span></span></span>
-<span class="r-in"><span>  <span class="va">MIDI</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">60</span>, <span class="fl">72</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">MIDI2freq</span><span class="op">(</span><span class="va">MIDI</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">midi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">60</span>, <span class="fl">72</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">MIDI2freq</span><span class="op">(</span><span class="va">midi</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 261.6256 269.2918 277.1826 285.3047 293.6648 302.2698 311.1270 320.2437</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 329.6276 339.2864 349.2282 359.4614 369.9944 380.8361 391.9954 403.4818</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [17] 415.3047 427.4741 440.0000 452.8930 466.1638 479.8234 493.8833 508.3552</span>
