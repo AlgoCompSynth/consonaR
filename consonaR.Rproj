@@ -1,9 +1,9 @@
 Version: 1.0
 ProjectId: fefaf73e-7bca-4c60-a3bd-d7eb1de6e744
 
-RestoreWorkspace: Default
-SaveWorkspace: Default
-AlwaysSaveHistory: Default
+RestoreWorkspace: Yes
+SaveWorkspace: Yes
+AlwaysSaveHistory: Yes
 
 EnableCodeIndexing: Yes
 UseSpacesForTab: Yes
@@ -21,3 +21,11 @@ BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
 PackageRoxygenize: rd,collate,namespace,vignette
+
+UseNativePipeOperator: Yes
+
+MarkdownWrap: Column
+MarkdownWrapAtColumn: 72
+MarkdownReferences: Document
+
+SpellingDictionary: en_US

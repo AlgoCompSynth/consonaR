@@ -24,6 +24,7 @@ a numeric vector of the corresponding MIDI note numbers
 ## Examples
 
 ``` r
+
   # chromatic scale
   freq <- 2 ^ (seq(0, 12) / 12) * 220
   print(freq2MIDI(freq))
