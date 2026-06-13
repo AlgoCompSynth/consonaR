@@ -23,7 +23,7 @@ freq2MIDI <- function(freq) {
 #' @name MIDI2freq
 #' @description Converts a vector of MIDI note numbers to a vector of the
 #' corresponding frequencies. Note that these MIDI note numbers are
-#' ***floating point***values - for example, MIDI note number 60.5 is the
+#' ***floating-point*** values - for example, MIDI note number 60.5 is the
 #' quarter-tone between middle C (60) and middle C# (61).
 #' @export MIDI2freq
 #' @param midi a numeric vector of MIDI note numbers
