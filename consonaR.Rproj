@@ -24,6 +24,8 @@ PackageRoxygenize: rd,collate,namespace,vignette
 
 UseNativePipeOperator: Yes
 
+QuitChildProcessesOnExit: Yes
+
 MarkdownWrap: Column
 MarkdownWrapAtColumn: 72
 MarkdownReferences: Document
