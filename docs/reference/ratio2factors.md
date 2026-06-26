@@ -23,7 +23,6 @@ the corresponding ratio
 ## Examples
 
 ``` r
-
 # we know the factors that yield the 1-3-5-7 Hexany
 # can we recover them?
 (hexany <- prodset_scale_table(list(

@@ -15,7 +15,7 @@ a numeric vector of the corresponding frequencies
 \description{
 Converts a vector of MIDI note numbers to a vector of the
 corresponding frequencies. Note that these MIDI note numbers are
-\emph{\strong{floating point}}values - for example, MIDI note number 60.5 is the
+\emph{\strong{floating-point}} values - for example, MIDI note number 60.5 is the
 quarter-tone between middle C (60) and middle C# (61).
 }
 \examples{

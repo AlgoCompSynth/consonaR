@@ -1,9 +1,9 @@
 # MIDI note number to frequency
 
 Converts a vector of MIDI note numbers to a vector of the corresponding
-frequencies. Note that these MIDI note numbers are ***floating
-point***values - for example, MIDI note number 60.5 is the quarter-tone
-between middle C (60) and middle C# (61).
+frequencies. Note that these MIDI note numbers are ***floating-point***
+values - for example, MIDI note number 60.5 is the quarter-tone between
+middle C (60) and middle C# (61).
 
 ## Usage
 
@@ -24,7 +24,6 @@ a numeric vector of the corresponding frequencies
 ## Examples
 
 ``` r
-
   # quarter-tone scale
   midi <- seq(60, 72, by = 0.5)
   print(MIDI2freq(midi))
