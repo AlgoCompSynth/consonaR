@@ -47,6 +47,7 @@ a `data.table` with six columns:
 ## Examples
 
 ``` r
+
 print(vanilla <- et_scale_table()) # default is 12EDO, of course
 #> Key: <ratio_cents>
 #>     degree ratio_cents ratio_frac frequency interval_cents interval_frac
